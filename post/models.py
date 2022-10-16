@@ -51,7 +51,7 @@ class RelatePost(models.Model):
     def clean(self):
         """Ensure that only one of `reply` and `tweet` can be set."""
         if not (bool(self.reply) ^ bool(self.tweet)):
-            raise ValidationError("Only one price field can be set.")
+            raise ValidationError("Only one post field can be set.")
 
     reply = models.ForeignKey(
         'self',
