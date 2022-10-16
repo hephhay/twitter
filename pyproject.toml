@@ -1,12 +1,12 @@
 [tool.poetry]
 name = "twitter"
 version = "0.1.0"
-description = ""
+description = "A twiiter api clone"
 authors = ["hephhay <faradaydanfard@gmail.com>"]
 license = "MIT"
 readme = "README.md"
-homepage = "https://python-poetry.org/"
-repository = "https://github.com/python-poetry/poetry"
+homepage = "https://github.com/hephhay/twitter/"
+repository = "https://github.com/hephhay/twitter/"
 
 [tool.poetry.dependencies]
 python = "^3.8"

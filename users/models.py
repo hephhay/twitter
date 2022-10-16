@@ -5,6 +5,8 @@ from django.utils.translation import gettext_lazy as _
 
 from uuid import uuid4
 
+from post.models import BaseModel, RelatePost
+
 class User(AuthModels.AbstractUser):    #type:ignore
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
 
@@ -37,7 +39,29 @@ class User(AuthModels.AbstractUser):    #type:ignore
     REQUIRED_FIELDS = ["username", "first_name", "last_name", "birth_date"]
 
     def __str__(self):
-        return f"{self.email}, {self.username}"
+        return f"User, {self.email}, {self.username}"
 
     class Meta:
         ordering = ['-created_at']
+
+class Owned(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete = models.CASCADE,
+        related_name = '%(class)s_user',
+        editable=False
+    )
+    class Meta:
+        abstract = True
+
+class Notification(BaseModel, Owned, RelatePost):
+    body = models.TextField(_('body'))
+    seen = models.BooleanField(default = False)
+
+    def __str__(self):
+        return f"Notification, {self.id}, {self.user}, {self.body}"
+
+class Bookmark(BaseModel, Owned, RelatePost):
+
+    def __str__(self):
+        return f"Bookmark, {self.id}"
