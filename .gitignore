@@ -1,0 +1,12 @@
+#virtual enviroment
+env/
+
+#enviroment variables
+.env
+
+#database
+*.sqlite3
+
+#caches
+.mypy_cache/
+__pycache__/
