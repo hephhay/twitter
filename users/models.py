@@ -23,7 +23,7 @@ class User(AuthModels.AbstractUser):    #type:ignore
 
     avatar = models.CharField(_("profile pictire"), max_length = 100, null=True)
 
-    location = models.CharField(_("location"), max_length = 100)
+    location = models.CharField(_("location"), max_length = 100, null = True)
 
     birth_date = models.DateField(_("birthday"))
 
@@ -34,7 +34,7 @@ class User(AuthModels.AbstractUser):    #type:ignore
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["username"]
+    REQUIRED_FIELDS = ["username", "first_name", "last_name", "birth_date"]
 
     def __str__(self):
         return f"{self.email}, {self.username}"
