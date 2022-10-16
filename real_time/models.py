@@ -4,7 +4,12 @@ from django.utils.translation import gettext_lazy as _
 from post.models import BaseModel, UserModel
 
 class Group(BaseModel):
-    group_name = models.CharField(_("group name"), max_length = 50, unique = True)
+    group_name = models.CharField(
+        _("group name"),
+        max_length = 50,
+        unique = True
+    )
+    
     participants = models.ManyToManyField(UserModel)
 
 class Message(BaseModel):

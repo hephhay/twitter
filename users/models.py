@@ -8,7 +8,10 @@ from uuid import uuid4
 from post.models import BaseModel, RelatePost
 
 class User(AuthModels.AbstractUser):    #type:ignore
-    id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid4, editable=False
+    )
 
     email = models.EmailField(
         _("email address"),
