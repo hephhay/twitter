@@ -55,7 +55,8 @@ INSTALLED_APPS = [
 
     #twitter defined apps
     'users',
-    'post'
+    'post',
+    'real_time'
 ]
 
 MIDDLEWARE = [
