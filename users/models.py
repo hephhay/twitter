@@ -15,8 +15,8 @@ class User(AuthModels.AbstractUser):
 
     email = models.EmailField(
         _("email address"),
-        unique=True,
-        error_messages={
+        unique = True,
+        error_messages = {
             "unique": _("A user with this email already exists."),
         },
         validators=[validate_email]

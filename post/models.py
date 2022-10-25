@@ -28,7 +28,7 @@ class Tweet(BaseModel):
     media = ArrayField(
         models.CharField(_('media files'), max_length = 200),
         default = list
-        )
+    )
 
     created_by = models.ForeignKey(
         UserModel,
