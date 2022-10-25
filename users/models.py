@@ -5,9 +5,9 @@ from django.utils.translation import gettext_lazy as _
 
 from uuid import uuid4
 
-from post.models import BaseModel, RelatePost
+from post.models import BaseModel, Tweet
 
-class User(AuthModels.AbstractUser):    #type:ignore
+class User(AuthModels.AbstractUser):
     id = models.UUIDField(
         primary_key=True,
         default=uuid4, editable=False
@@ -57,14 +57,25 @@ class Owned(models.Model):
     class Meta:
         abstract = True
 
-class Notification(BaseModel, Owned, RelatePost):
+class RelateTweet(models.Model):
+    tweet = models.ForeignKey(
+        Tweet,
+        on_delete = models.CASCADE,
+        related_name ='%(class)s_tweet',
+        null = True,
+        editable=False
+    )
+    class Meta:
+        abstract = True
+
+class Notification(BaseModel, Owned, RelateTweet):
     body = models.TextField(_('body'))
     seen = models.BooleanField(default = False)
 
     def __str__(self):
         return f"Notification, {self.id}, {self.user}, {self.body}"
 
-class Bookmark(BaseModel, Owned, RelatePost):
+class Bookmark(BaseModel, Owned, RelateTweet):
 
     def __str__(self):
         return f"Bookmark, {self.id}"

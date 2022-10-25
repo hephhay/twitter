@@ -14,11 +14,13 @@ class BaseModel(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
 
+    updated_at = models.DateTimeField(auto_now=True, editable=False)
+
     class Meta:
-        ordering = ['created_at']
+        ordering = ['-created_at', '-updated_at']
         abstract = True
 
-class Post(BaseModel):
+class Tweet(BaseModel):
     likes = models.ManyToManyField(UserModel, related_name = '%(class)s_likes')
 
     content = models.TextField(_('content'), null = True)
@@ -35,24 +37,6 @@ class Post(BaseModel):
         editable=False
     )
 
-    updated_at = models.DateTimeField(auto_now=True, editable=False)
-
-    class Meta:
-        abstract = True
-
-
-class Tweet(Post):
-
-    def __str__(self) -> str:
-        return f"Tweet, {self.id}, {self.created_by}"
-
-class RelatePost(models.Model):
-
-    def clean(self):
-        """Ensure that only one of `reply` and `tweet` can be set."""
-        if not (bool(self.reply) ^ bool(self.tweet)):
-            raise ValidationError("Only one post field can be set.")
-
     reply = models.ForeignKey(
         'self',
         on_delete = models.CASCADE,
@@ -61,18 +45,22 @@ class RelatePost(models.Model):
         editable=False
     )
 
+    def __str__(self) -> str:
+        return f"Tweet, {self.id}, {self.created_by}"
+
+class ReTweet(BaseModel):
+    quote = models.TextField(_('quote'), null = True)
+
     tweet = models.ForeignKey(
         Tweet,
         on_delete = models.CASCADE,
-        related_name ='%(class)s_post',
-        null = True,
+        related_name ='%(class)s_tweet',
         editable=False
     )
 
-    class Meta:
-        abstract = True
-
-class Reply(Post, RelatePost):
-
-    def __str__(self) -> str:
-        return f"Reply, {self.id}, {self.created_by}"
+    created_by = models.ForeignKey(
+        UserModel,
+        on_delete = models.CASCADE,
+        related_name = '%(class)s_creator',
+        editable=False
+    )
