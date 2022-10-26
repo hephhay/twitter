@@ -1,7 +1,8 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.contrib.auth import get_user_model
 
-from post.models import BaseModel, UserModel
+from post.models import BaseModel
 
 class Group(BaseModel):
     group_name = models.CharField(
@@ -10,7 +11,7 @@ class Group(BaseModel):
         unique = True
     )
     
-    participants = models.ManyToManyField(UserModel)
+    participants = models.ManyToManyField(get_user_model())
 
 class Message(BaseModel):
     body = models.TextField(_('body'))
@@ -18,7 +19,7 @@ class Message(BaseModel):
     is_document = models.BooleanField(default = False)
 
     sender = models.ForeignKey(
-        UserModel,
+        get_user_model(),
         on_delete = models.CASCADE,
         related_name = '%(class)s_user',
         editable=False
@@ -30,5 +31,5 @@ class Message(BaseModel):
         editable=False
     )
 
-    seen_by = models.ManyToManyField(UserModel)
+    seen_by = models.ManyToManyField(get_user_model())
 

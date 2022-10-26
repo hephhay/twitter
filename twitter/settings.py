@@ -123,7 +123,7 @@ DATABASES = {
 
 AUTH_USER_MODEL = 'users.User'
 
-USER_ID_FIELD = 'email'
+USER_ID_FIELD = 'username'
 
 
 # Password validation
@@ -166,11 +166,17 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication'
-        ]
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'twitter.pagination.CustomPageNumberPagination'
 }
 
 DJOSER = {
-    "USER_ID_FIELD": USER_ID_FIELD
+    "USER_ID_FIELD": USER_ID_FIELD,
+    "SERIALIZERS": {
+        "user_create": "users.serializers.UserCreate",
+        "user": "users.serializers.UserSerializer",
+        "current_user": "users.serializers.UserSerializer",
+    }
 }
 
 SIMPLE_JWT = {

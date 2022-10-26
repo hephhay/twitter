@@ -1,13 +1,12 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
+from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
-from rest_framework.exceptions import ValidationError
 
 from uuid import uuid4
 
-settings: any = settings
-UserModel: str = settings.AUTH_USER_MODEL
+User = settings.AUTH_USER_MODEL
 
 class BaseModel(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
@@ -21,7 +20,7 @@ class BaseModel(models.Model):
         abstract = True
 
 class Tweet(BaseModel):
-    likes = models.ManyToManyField(UserModel, related_name = '%(class)s_likes')
+    likes = models.ManyToManyField(User, related_name = '%(class)s_likes')
 
     content = models.TextField(_('content'), null = True)
 
@@ -31,7 +30,7 @@ class Tweet(BaseModel):
     )
 
     created_by = models.ForeignKey(
-        UserModel,
+        User,
         on_delete = models.CASCADE,
         related_name = '%(class)s_creator',
         editable=False
@@ -59,7 +58,7 @@ class ReTweet(BaseModel):
     )
 
     created_by = models.ForeignKey(
-        UserModel,
+        User,
         on_delete = models.CASCADE,
         related_name = '%(class)s_creator',
         editable=False
