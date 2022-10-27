@@ -1,11 +1,30 @@
+from uuid import uuid4
+
 from django.db import models
 from django.contrib.auth import models as AuthModels
 from django.core.validators import validate_email
 from django.utils.translation import gettext_lazy as _
 
-from uuid import uuid4
+from post.models import BaseModel, Tweet, User as User_Model
 
-from post.models import BaseModel, Tweet
+class Follow(models.Model):
+    user = models.ForeignKey(
+        User_Model,
+        on_delete = models.CASCADE,
+        editable = False,
+        related_name = 'follow_user'
+    )
+
+    follower = models.ForeignKey(
+        User_Model,
+        on_delete = models.CASCADE,
+        editable = False,
+    )
+
+    start_follow = models.DateTimeField(
+        auto_now_add = True,
+        editable = False
+    )
 
 class User(AuthModels.AbstractUser):
     id = models.UUIDField(
@@ -26,20 +45,48 @@ class User(AuthModels.AbstractUser):
 
     last_name = models.CharField(_("last name"), max_length=150)
 
-    avatar = models.CharField(_("profile pictire"), max_length = 100, null=True)
+    followers = models.ManyToManyField(
+        'self',
+        through='Follow',
+        through_fields=('user', 'follower'),
+        related_name = 'following',
+        symmetrical = False
+    )
 
-    location = models.CharField(_("location"), max_length = 100, null = True)
+    avatar = models.CharField(
+        _("profile pictire"),
+        max_length = 100,
+        null=True
+    )
+
+    location = models.CharField(
+        _("location"),
+        max_length = 100,
+        null = True
+    )
 
     birth_date = models.DateField(_("birthday"))
 
     is_verified = models.BooleanField(default = False)
 
-    created_at = models.DateTimeField(auto_now_add=True, editable=False)
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        editable=False
+    )
 
-    updated_at = models.DateTimeField(auto_now=True, editable=False)
+    updated_at = models.DateTimeField(
+        auto_now=True,
+        editable=False
+    )
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["username", "first_name", "last_name", "birth_date"]
+
+    REQUIRED_FIELDS = [
+        "username",
+        "first_name",
+        "last_name",
+        "birth_date"
+    ]
 
     def __str__(self):
         return f"User, {self.email}, {self.username}"

@@ -1,0 +1,142 @@
+[
+	{
+		"model": "users.User",
+		"pk": "406eb828-a526-4ca9-940c-11de6cf4bcf0",
+		"fields": {
+			"first_name": "Makinwa",
+			"last_name": "Adegoke",
+			"email": "makinwa.adegoke@yahoo.com",
+			"username": "makinwa.taiwo79",
+			"password": "nsP188hDxu_T_BhY0lwW",
+			"birth_date": "2004-09-03",
+			"created_at": "2019-11-23T02:04:02.612Z",
+			"updated_at": "2021-03-20T16:15:09.373Z"
+		}
+	},
+	{
+		"model": "users.User",
+		"pk": "7922d196-cac4-443e-83ed-e61582097c14",
+		"fields": {
+			"first_name": "Adegoke",
+			"last_name": "Afunku",
+			"email": "adegoke.afunku@gmail.com",
+			"username": "adegoke35",
+			"password": "kcxYnDHrFFzLx5frH8Ap",
+			"birth_date": "1987-12-05",
+			"created_at": "2021-03-20T17:38:09.069Z",
+			"updated_at": "2022-12-05T23:32:26.600Z"
+		}
+	},
+	{
+		"model": "users.User",
+		"pk": "92fed589-ed85-498b-802a-08fcc0dbe33d",
+		"fields": {
+			"first_name": "Jadesola",
+			"last_name": "Ebubechukwu",
+			"email": "jadesola.ebubechukwu51@hotmail.com",
+			"username": "jadesola.ademayowa82",
+			"password": "QavyV7Sx0DwiLhJAasCL",
+			"birth_date": "1996-07-22",
+			"created_at": "2020-03-27T22:31:58.209Z",
+			"updated_at": "2022-09-22T21:08:18.734Z"
+		}
+	},
+	{
+		"model": "users.User",
+		"pk": "3ee128cf-d4d3-43f2-9a13-4624d4dac563",
+		"fields": {
+			"first_name": "Jolayemi",
+			"last_name": "Busari",
+			"email": "jolayemi47@hotmail.com",
+			"username": "jolayemi11",
+			"password": "Rh9k7b6dxPDjYT4v50Ik",
+			"birth_date": "1986-05-01",
+			"created_at": "2020-06-27T12:45:48.024Z",
+			"updated_at": "2023-03-07T23:42:04.606Z"
+		}
+	},
+	{
+		"model": "users.User",
+		"pk": "44971573-6445-44be-bd52-30d44102c043",
+		"fields": {
+			"first_name": "Jadesola",
+			"last_name": "Grace",
+			"email": "jadesola56@gmail.com",
+			"username": "jadesola.chibuike",
+			"password": "0ddux8pqEmO1OjlSjx2k",
+			"birth_date": "1983-04-05",
+			"created_at": "2022-01-25T13:46:00.662Z",
+			"updated_at": "2025-01-09T03:30:04.295Z"
+		}
+	},
+	{
+		"model": "users.User",
+		"pk": "be13f034-b91d-4b43-9881-fe9695c2f057",
+		"fields": {
+			"first_name": "Abisoye",
+			"last_name": "Olasunkanmi",
+			"email": "abisoye_olasunkanmi64@hotmail.com",
+			"username": "abisoye_sanusi64",
+			"password": "1_30Jj01Xn8bAGmVAmH8",
+			"birth_date": "1986-10-04",
+			"created_at": "2022-06-17T04:27:26.538Z",
+			"updated_at": "2023-04-06T03:57:14.884Z"
+		}
+	},
+	{
+		"model": "users.User",
+		"pk": "7bb8cd9a-c3f6-4f19-acbf-5f268f7cd3e1",
+		"fields": {
+			"first_name": "Shade",
+			"last_name": "Oyelude",
+			"email": "shade22@hotmail.com",
+			"username": "shade.samuel75",
+			"password": "tzU0dq4eoQN9LlZFzwnL",
+			"birth_date": "2007-12-29",
+			"created_at": "2019-06-04T08:50:46.396Z",
+			"updated_at": "2019-11-13T10:52:23.835Z"
+		}
+	},
+	{
+		"model": "users.User",
+		"pk": "8b38a911-22ff-484f-ad35-9f1324d9a438",
+		"fields": {
+			"first_name": "Augustina",
+			"last_name": "Wuraola",
+			"email": "augustina0@hotmail.com",
+			"username": "augustina32",
+			"password": "Qdy5mIbMZXss0f88Zz95",
+			"birth_date": "1997-06-06",
+			"created_at": "2020-03-03T00:52:46.575Z",
+			"updated_at": "2021-12-31T18:59:13.677Z"
+		}
+	},
+	{
+		"model": "users.User",
+		"pk": "75adb001-5058-44a0-82db-f47387d207cc",
+		"fields": {
+			"first_name": "Bukola",
+			"last_name": "Nwachukwu",
+			"email": "bukola27@yahoo.com",
+			"username": "bukola.ademola",
+			"password": "5bgAAlSEZASM39mJ8FRw",
+			"birth_date": "2003-10-05",
+			"created_at": "2020-11-19T03:55:16.649Z",
+			"updated_at": "2022-01-28T07:08:04.105Z"
+		}
+	},
+	{
+		"model": "users.User",
+		"pk": "358be3fe-5c78-4140-8168-61de82f8801d",
+		"fields": {
+			"first_name": "Titi",
+			"last_name": "Sulaimon",
+			"email": "titi34@hotmail.com",
+			"username": "titi_adewale",
+			"password": "YBsZlqnoNpQ6v5A1CRgz",
+			"birth_date": "1993-12-15",
+			"created_at": "2020-08-10T10:34:42.284Z",
+			"updated_at": "2021-11-16T20:05:58.940Z"
+		}
+	}
+]

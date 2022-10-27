@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
-from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 
@@ -19,7 +18,8 @@ class BaseModel(models.Model):
         ordering = ['-created_at', '-updated_at']
         abstract = True
 
-class Tweet(BaseModel):
+class Post(BaseModel):
+
     likes = models.ManyToManyField(User, related_name = '%(class)s_likes')
 
     content = models.TextField(_('content'), null = True)
@@ -36,6 +36,11 @@ class Tweet(BaseModel):
         editable=False
     )
 
+    class Meta:
+        abstract = True
+
+class Tweet(Post):
+
     reply = models.ForeignKey(
         'self',
         on_delete = models.CASCADE,
@@ -44,11 +49,21 @@ class Tweet(BaseModel):
         editable=False
     )
 
+    is_reply = models.BooleanField(
+        _('is reply'),
+        default = False,
+        editable = False
+    )
+
+    def save(self, *args, **kwargs) -> None:
+        if (self.reply or self.reply_id):
+            self.is_reply = True
+        return super().save(*args, **kwargs)
+
     def __str__(self) -> str:
         return f"Tweet, {self.id}, {self.created_by}"
 
-class ReTweet(BaseModel):
-    quote = models.TextField(_('quote'), null = True)
+class ReTweet(Post):
 
     tweet = models.ForeignKey(
         Tweet,
@@ -63,3 +78,6 @@ class ReTweet(BaseModel):
         related_name = '%(class)s_creator',
         editable=False
     )
+
+    def __str__(self) -> str:
+        return f"Re_Tweet, {self.id}, {self.created_by}"

@@ -49,9 +49,10 @@ INSTALLED_APPS = [
 
     #third-party apps
     'rest_framework',
-    'rest_framework.authtoken',
+    # 'rest_framework.authtoken',
     'djoser',
     'rest_framework_simplejwt',
+    'django_filters',
 
     #twitter defined apps
     'users',
@@ -163,10 +164,13 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication'
     ],
+        'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+        'rest_framework.filters.SearchFilter'
+        ],
     'DEFAULT_PAGINATION_CLASS': 'twitter.pagination.CustomPageNumberPagination'
 }
 
@@ -176,7 +180,12 @@ DJOSER = {
         "user_create": "users.serializers.UserCreate",
         "user": "users.serializers.UserSerializer",
         "current_user": "users.serializers.UserSerializer",
-    }
+    },
+    "PERMISSIONS": {
+        "user_list": ["rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"],
+        "user": ["twitter.permissions.CurrentUserOrAdminOrReadOnly"]
+    },
+    "HIDE_USERS": False
 }
 
 SIMPLE_JWT = {
@@ -200,7 +209,7 @@ SIMPLE_JWT = {
     'USER_ID_CLAIM': 'user_id',
     'USER_AUTHENTICATION_RULE': 'rest_framework_simplejwt.authentication.default_user_authentication_rule',
 
-    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'AUTH_TOKEN_CLASSES': ['rest_framework_simplejwt.tokens.AccessToken'],
     'TOKEN_TYPE_CLAIM': 'token_type',
     'TOKEN_USER_CLASS': 'rest_framework_simplejwt.models.TokenUser',
 
@@ -215,6 +224,10 @@ SIMPLE_JWT = {
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+FIXTURE_DIRS = [
+    os.path.join(BASE_DIR, 'fixtures')
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
