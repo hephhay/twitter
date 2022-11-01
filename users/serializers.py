@@ -30,7 +30,12 @@ class UserSerializer(UserSerial):
             'id',
             'created_at',
             'updated_at',
-            'is_verified'
+            'is_verified',
+            'is_superuser',
+            'is_staff',
+            'is_active',
+            'date_joined',
+            'last_login'
         )
         exclude = (
             'password',

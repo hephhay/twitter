@@ -2,25 +2,40 @@ from typing import Any
 
 from django.db.models import Count, OuterRef, Exists
 
-from rest_framework import viewsets, serializers
+from rest_framework import (
+    viewsets,
+    serializers,
+    permissions,
+    status,
+    exceptions,
+    mixins
+)
 from rest_framework.decorators import action
-from rest_framework import permissions, status, exceptions, mixins
 from rest_framework.response import Response
 
 from djoser.conf import settings
 
+from users.filters import UserFilter
 from users.models import User
 from users.serializers import UserSerializer
+from twitter.mixins import ViewSetMixins
 
 class UserViewSet(
     viewsets.GenericViewSet,
     mixins.ListModelMixin,
-    mixins.RetrieveModelMixin
+    mixins.RetrieveModelMixin,
+    ViewSetMixins
 ):
-    queryset = User.objects.all()
+    queryset = User.objects.all().prefetch_related('followers')
+
     serializer_class = UserSerializer
+
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
     lookup_field = settings.USER_ID_FIELD
+
+    filterset_class = UserFilter
+
     search_fields = [
         'id',
         'email',
@@ -29,16 +44,14 @@ class UserViewSet(
         'location'
     ]
 
-    def get_queryset(self):
+    def get_queryset(self) -> Any:
         queryset = super().get_queryset()
 
-        if self.action in ('retrieve', 'list'):
-            queryset = queryset.annotate(
-                num_followers = Count('followers'),
-                num_following = Count('following'),
-            ).order_by('-created_at')
+        if self.request.method == 'GET':
+            queryset = queryset.annotate_nums()
 
-            queryset = self.checkFollows(queryset)
+            queryset = self.checkFollows(queryset)\
+                    .order_by('-num_followers')
 
         return queryset
 
@@ -71,10 +84,8 @@ class UserViewSet(
         else:
             user.followers.remove(request.user.id)
 
-        if user.followers.count() > 10:
+        if user.followers.count() >= 10 and (not user.is_verified):
             user.is_verified = True
-        else:
-            user.is_verified = False
 
         user.save()
 
@@ -84,22 +95,16 @@ class UserViewSet(
         queryset = self.checkFollows(queryset).order_by(
             'follow__start_follow'
         )
-        queryset = self.filter_queryset(queryset)
 
-        page = self.paginate_queryset(queryset)
-        if page is not None:
-            serializer = self.get_serializer(page, many=True)
-            return self.get_paginated_response(serializer.data)
-
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
+        return self.generic_list(queryset)
 
     @action(
         detail=True,
         methods=['get'],
     )
     def followers(self, request, *args, **kwargs):
-        queryset = self.get_object().followers.all()
+        queryset = self.get_by_id().followers.all()
+
         return self.list_view(queryset)
 
     @action(
@@ -107,5 +112,6 @@ class UserViewSet(
         methods=['get'],
     )
     def following(self, request, *args, **kwargs):
-        queryset = self.get_object().following.all()
+        queryset = queryset = self.get_by_id().following.all()
+
         return self.list_view(queryset)

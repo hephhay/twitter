@@ -13,3 +13,9 @@ class CurrentUserOrAdminOrReadOnly(permissions.IsAuthenticatedOrReadOnly):
         if type(obj) == type(user) and obj == user:
             return True
         return request.method in SAFE_METHODS or user.is_staff
+
+class OwnerOrAdminOrReadOnly(permissions.IsAuthenticatedOrReadOnly):
+    def has_object_permission(self, request, view, obj):
+        if getattr(obj, 'owner_field', None) == request.user.id:
+            return True
+        return request.method in SAFE_METHODS or request.user.is_staff

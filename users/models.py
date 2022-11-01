@@ -1,3 +1,4 @@
+from typing import Any
 from uuid import uuid4
 
 from django.db import models
@@ -5,7 +6,7 @@ from django.contrib.auth import models as AuthModels
 from django.core.validators import validate_email
 from django.utils.translation import gettext_lazy as _
 
-from post.models import BaseModel, Tweet, User as User_Model
+from post.models import BaseModel, Tweet, User_Model
 
 class Follow(models.Model):
     user = models.ForeignKey(
@@ -26,6 +27,16 @@ class Follow(models.Model):
         editable = False
     )
 
+class UserQuerySet(models.QuerySet): #type: ignore
+    def annotate_nums(self) -> Any:
+        return self.annotate(
+                num_followers = models.Count('followers'),
+                num_following = models.Count('following'),
+            )
+
+class UserManager(AuthModels.UserManager): #type: ignore
+    _queryset_class = UserQuerySet
+
 class User(AuthModels.AbstractUser):
     id = models.UUIDField(
         primary_key=True,
@@ -40,6 +51,8 @@ class User(AuthModels.AbstractUser):
         },
         validators=[validate_email]
     )
+
+    bio = models.TextField(_('Bio'), null = True)
 
     first_name = models.CharField(_("first name"), max_length=150)
 
@@ -87,6 +100,8 @@ class User(AuthModels.AbstractUser):
         "last_name",
         "birth_date"
     ]
+
+    objects = UserManager()
 
     def __str__(self):
         return f"User, {self.email}, {self.username}"

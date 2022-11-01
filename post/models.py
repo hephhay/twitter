@@ -5,7 +5,7 @@ from django.conf import settings
 
 from uuid import uuid4
 
-User = settings.AUTH_USER_MODEL
+User_Model = settings.AUTH_USER_MODEL
 
 class BaseModel(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
@@ -18,11 +18,39 @@ class BaseModel(models.Model):
         ordering = ['-created_at', '-updated_at']
         abstract = True
 
-class Post(BaseModel):
+class Like(models.Model):
+    liked_by = models.ForeignKey(
+        User_Model,
+        on_delete = models.CASCADE,
+        editable = False,
+    )
 
-    likes = models.ManyToManyField(User, related_name = '%(class)s_likes')
+    liked = models.ForeignKey(
+        'Tweet',
+        on_delete = models.CASCADE,
+        editable = False,
+    )
 
-    content = models.TextField(_('content'), null = True)
+    liked_on = models.DateTimeField(
+        auto_now_add = True,
+        editable = False
+    )
+
+class Tweet(BaseModel):
+
+    likes = models.ManyToManyField(
+        User_Model,
+        through = 'Like',
+        through_fields = ('liked', 'liked_by'),
+        related_name = 'user_likes'
+    )
+
+    content = models.TextField(_('content or quote'), null = True)
+
+    tags = ArrayField(
+        models.CharField(_('hash tags or usernames'), max_length = 200),
+        default = list
+    )
 
     media = ArrayField(
         models.CharField(_('media files'), max_length = 200),
@@ -30,54 +58,26 @@ class Post(BaseModel):
     )
 
     created_by = models.ForeignKey(
-        User,
+        User_Model,
         on_delete = models.CASCADE,
-        related_name = '%(class)s_creator',
         editable=False
     )
 
-    class Meta:
-        abstract = True
-
-class Tweet(Post):
-
-    reply = models.ForeignKey(
+    tweet = models.ForeignKey(
         'self',
         on_delete = models.CASCADE,
-        related_name ='%(class)s_reply',
+        related_name ='retweets',
         null = True,
         editable=False
     )
 
-    is_reply = models.BooleanField(
-        _('is reply'),
-        default = False,
-        editable = False
+    reply_to = models.ForeignKey(
+        'self',
+        on_delete = models.CASCADE,
+        related_name ='replies',
+        null = True,
+        editable=False
     )
-
-    def save(self, *args, **kwargs) -> None:
-        if (self.reply or self.reply_id):
-            self.is_reply = True
-        return super().save(*args, **kwargs)
 
     def __str__(self) -> str:
         return f"Tweet, {self.id}, {self.created_by}"
-
-class ReTweet(Post):
-
-    tweet = models.ForeignKey(
-        Tweet,
-        on_delete = models.CASCADE,
-        related_name ='%(class)s_tweet',
-        editable=False
-    )
-
-    created_by = models.ForeignKey(
-        User,
-        on_delete = models.CASCADE,
-        related_name = '%(class)s_creator',
-        editable=False
-    )
-
-    def __str__(self) -> str:
-        return f"Re_Tweet, {self.id}, {self.created_by}"
