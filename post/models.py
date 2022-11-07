@@ -5,6 +5,8 @@ from django.conf import settings
 
 from uuid import uuid4
 
+from twitter.managers import CustomManager
+
 User_Model = settings.AUTH_USER_MODEL
 
 class BaseModel(models.Model):
@@ -63,7 +65,7 @@ class Tweet(BaseModel):
         editable=False
     )
 
-    tweet = models.ForeignKey(
+    retweet = models.ForeignKey(
         'self',
         on_delete = models.CASCADE,
         related_name ='retweets',
@@ -71,13 +73,15 @@ class Tweet(BaseModel):
         editable=False
     )
 
-    reply_to = models.ForeignKey(
+    reply = models.ForeignKey(
         'self',
         on_delete = models.CASCADE,
         related_name ='replies',
         null = True,
         editable=False
     )
+
+    objects = CustomManager()
 
     def __str__(self) -> str:
         return f"Tweet, {self.id}, {self.created_by}"

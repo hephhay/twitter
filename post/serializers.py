@@ -5,7 +5,7 @@ from twitter.const import READ_ONLY_FIELDS
 
 class TweetSerilizer(serializers.ModelSerializer):
 
-    num_replies = serializers.IntegerField(read_only = True)
+    num_reply = serializers.IntegerField(read_only = True)
 
     num_retweet = serializers.IntegerField(read_only = True)
 

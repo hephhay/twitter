@@ -7,6 +7,7 @@ from django.core.validators import validate_email
 from django.utils.translation import gettext_lazy as _
 
 from post.models import BaseModel, Tweet, User_Model
+from twitter.queryset import CustomQuerySet
 
 class Follow(models.Model):
     user = models.ForeignKey(
@@ -27,12 +28,19 @@ class Follow(models.Model):
         editable = False
     )
 
-class UserQuerySet(models.QuerySet): #type: ignore
-    def annotate_nums(self) -> Any:
+class UserQuerySet(CustomQuerySet): #type: ignore
+
+    def check_follow(self, user_id: str) -> Any:
+        UserModel : Any = User
+
         return self.annotate(
-                num_followers = models.Count('followers'),
-                num_following = models.Count('following'),
+            follows_you = models.Exists(
+                UserModel.following.through.objects.filter(
+                    user_id = user_id,
+                    follower_id = models.OuterRef('pk')
+                )
             )
+        )
 
 class UserManager(AuthModels.UserManager): #type: ignore
     _queryset_class = UserQuerySet

@@ -1,6 +1,6 @@
 from typing import Any
 
-from django.db.models import Count, OuterRef, Exists
+from django.db.models import OuterRef, Exists
 
 from rest_framework import (
     viewsets,
@@ -48,24 +48,10 @@ class UserViewSet(
         queryset = super().get_queryset()
 
         if self.request.method == 'GET':
-            queryset = queryset.annotate_nums()
-
-            queryset = self.checkFollows(queryset)\
-                    .order_by('-num_followers')
+            queryset = queryset.num_many_to_many('followers', 'following')\
+                .check_follow(self.request.user.id).order_by('-num_followers')
 
         return queryset
-
-    def checkFollows(self, queryset) -> Any:
-        UserModel : Any = User
-
-        return queryset.annotate(
-            follows_you = Exists(
-                UserModel.following.through.objects.filter(
-                    user_id = self.request.user.id,
-                    follower_id = OuterRef('pk')
-                )
-            )
-        )
 
     @action(
         detail=True,
@@ -92,9 +78,8 @@ class UserViewSet(
         return Response({"message" : "success"}, status = status.HTTP_200_OK)
 
     def list_view(self, queryset) -> Any:
-        queryset = self.checkFollows(queryset).order_by(
-            'follow__start_follow'
-        )
+        queryset = queryset.check_follow(self.request.user.id)\
+            .order_by('follow__start_follow')
 
         return self.generic_list(queryset)
 

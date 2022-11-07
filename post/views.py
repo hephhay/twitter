@@ -14,7 +14,7 @@ from twitter.permissions import OwnerOrAdminOrReadOnly
 from twitter.mixins import ViewSetMixins
 
 class TweetViewSet(viewsets.ModelViewSet, ViewSetMixins):
-    queryset = Tweet.objects.all()
+    queryset = Tweet.objects.prefetch_related('retweet', 'reply')
 
     serializer_class = TweetSerilizer
 
@@ -27,12 +27,14 @@ class TweetViewSet(viewsets.ModelViewSet, ViewSetMixins):
     def get_queryset(self) -> Any:
         queryset = super().get_queryset()
 
+        if self.action == 'retrieve':
+            queryset = queryset
+            print(queryset.model)
+
         if self.request.method == 'GET':
-            queryset = queryset.annotate(
-                num_replies = self.count_subquery('reply_to'),
-                num_retweet = self.count_subquery('tweet'),
-                num_likes = Count('likes')
-            ).order_by('created_at')
+            queryset = queryset.num_one_to_many('retweet', 'reply')\
+                .num_many_to_many('likes')\
+                    .order_by('created_at')
 
         return queryset
 
@@ -40,8 +42,8 @@ class TweetViewSet(viewsets.ModelViewSet, ViewSetMixins):
     def list(self, request, *args, **kwargs):
 
         queryset = self.get_queryset().filter(
-            tweet = None,
-            reply_to = None
+            retweet = None,
+            reply = None
         )
 
         return self.generic_list(queryset)
@@ -84,6 +86,25 @@ class TweetViewSet(viewsets.ModelViewSet, ViewSetMixins):
     )
     def likes(self, request, *args, **kwargs):
         queryset = self.get_by_id().likes.all()\
-            .annotate_nums().order_by('like__liked_on')
+            .num_many_to_many('followers', 'following')\
+                .check_follow(self.request.user.id)\
+                    .order_by('like__liked_on')
 
         return self.generic_list(queryset)
+
+    @action(
+        detail=True,
+        methods=['get']
+    )
+    def replies(self, request, *args, **kwargs):
+        queryset = self.get_by_id().replies.all()\
+            .num_many_to_many('likes')\
+                    .num_one_to_many('retweet', 'reply')\
+                        .order_by('created_at')
+
+        return self.generic_list(queryset)
+
+"""
+Allow users to br displayed in tweets
+display related tweet for get one
+"""
