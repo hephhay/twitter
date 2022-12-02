@@ -1,11 +1,11 @@
+from uuid import uuid4
+
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 
-from uuid import uuid4
-
-from twitter.managers import CustomManager
+from twitter.queryset import CustomQuerySet
 
 User_Model = settings.AUTH_USER_MODEL
 
@@ -19,6 +19,14 @@ class BaseModel(models.Model):
     class Meta:
         ordering = ['-created_at', '-updated_at']
         abstract = True
+
+class TweetQuerySet(CustomQuerySet):
+        def prop_count(self):
+            return self.num_one_to_many('retweet', 'reply')\
+                .num_many_to_many('likes')\
+
+class TweetManager(models.Manager): #type:ignore
+    _queryset_class = TweetQuerySet
 
 class Like(models.Model):
     liked_by = models.ForeignKey(
@@ -81,7 +89,7 @@ class Tweet(BaseModel):
         editable=False
     )
 
-    objects = CustomManager()
+    objects = TweetManager()
 
     def __str__(self) -> str:
         return f"Tweet, {self.id}, {self.created_by}"

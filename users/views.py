@@ -1,7 +1,5 @@
 from typing import Any
 
-from django.db.models import OuterRef, Exists
-
 from rest_framework import (
     viewsets,
     serializers,
@@ -14,14 +12,16 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from djoser.conf import settings
+from twitter.util import cast_user
 
 from users.filters import UserFilter
 from users.models import User
 from users.serializers import UserSerializer
 from twitter.mixins import ViewSetMixins
 
+settings: Any = settings
+
 class UserViewSet(
-    viewsets.GenericViewSet,
     mixins.ListModelMixin,
     mixins.RetrieveModelMixin,
     ViewSetMixins
@@ -39,6 +39,7 @@ class UserViewSet(
     search_fields = [
         'id',
         'email',
+        'username',
         'first_name',
         'last_name',
         'location'
@@ -48,8 +49,9 @@ class UserViewSet(
         queryset = super().get_queryset()
 
         if self.request.method == 'GET':
-            queryset = queryset.num_many_to_many('followers', 'following')\
-                .check_follow(self.request.user.id).order_by('-num_followers')
+            user = cast_user(self.request.user)
+            queryset = queryset.follow_count()\
+                .check_follow(user.id).order_by('-num_followers')
 
         return queryset
 
@@ -77,8 +79,9 @@ class UserViewSet(
 
         return Response({"message" : "success"}, status = status.HTTP_200_OK)
 
-    def list_view(self, queryset) -> Any:
-        queryset = queryset.check_follow(self.request.user.id)\
+    def list_view(self, queryset) -> Response:
+        user = cast_user(self.request.user)
+        queryset = queryset.check_follow(user.id)\
             .order_by('follow__start_follow')
 
         return self.generic_list(queryset)

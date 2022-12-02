@@ -28,7 +28,7 @@ class Follow(models.Model):
         editable = False
     )
 
-class UserQuerySet(CustomQuerySet): #type: ignore
+class UserQuerySet(CustomQuerySet):
 
     def check_follow(self, user_id: str) -> Any:
         UserModel : Any = User
@@ -41,6 +41,9 @@ class UserQuerySet(CustomQuerySet): #type: ignore
                 )
             )
         )
+
+    def follow_count(self):
+        return self.num_many_to_many('followers', 'following')
 
 class UserManager(AuthModels.UserManager): #type: ignore
     _queryset_class = UserQuerySet

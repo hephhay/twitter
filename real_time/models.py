@@ -10,7 +10,14 @@ class Group(BaseModel):
         max_length = 50,
         unique = True
     )
-    
+
+    created_by = models.ForeignKey(
+        get_user_model(),
+        on_delete = models.CASCADE,
+        related_name = '%(class)s_creator',
+        editable=False
+    )
+
     participants = models.ManyToManyField(get_user_model())
 
 class Message(BaseModel):

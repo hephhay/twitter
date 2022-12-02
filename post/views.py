@@ -1,14 +1,13 @@
 from typing import Any
 
-from django.db.models import Count
-
 from rest_framework import viewsets, serializers, status, permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-
 from post.models import Tweet
 from post.serializers import TweetSerilizer
+from post.filters import TweetFilter
+from twitter.util import cast_user
 from users.serializers import UserSerializer
 from twitter.permissions import OwnerOrAdminOrReadOnly
 from twitter.mixins import ViewSetMixins
@@ -19,6 +18,19 @@ class TweetViewSet(viewsets.ModelViewSet, ViewSetMixins):
     serializer_class = TweetSerilizer
 
     permission_classes = [OwnerOrAdminOrReadOnly]
+
+    filterset_class = TweetFilter
+
+    search_fields = [
+        'created_by__email',
+        'created_by__first_name',
+        'created_by__last_name',
+        'created_by__location',
+        'created_by__username'
+        'content',
+        'id',
+        'tags'
+    ]
 
     owener_field = 'owner_field'
 
@@ -32,21 +44,13 @@ class TweetViewSet(viewsets.ModelViewSet, ViewSetMixins):
             print(queryset.model)
 
         if self.request.method == 'GET':
-            queryset = queryset.num_one_to_many('retweet', 'reply')\
-                .num_many_to_many('likes')\
-                    .order_by('created_at')
+            queryset = queryset.prop_count().order_by('num_likes')
 
         return queryset
 
 
     def list(self, request, *args, **kwargs):
-
-        queryset = self.get_queryset().filter(
-            retweet = None,
-            reply = None
-        )
-
-        return self.generic_list(queryset)
+        return self.generic_list(self.get_queryset())
 
     @action(
         detail=True,
@@ -85,10 +89,10 @@ class TweetViewSet(viewsets.ModelViewSet, ViewSetMixins):
         serializer_class = UserSerializer,
     )
     def likes(self, request, *args, **kwargs):
-        queryset = self.get_by_id().likes.all()\
-            .num_many_to_many('followers', 'following')\
-                .check_follow(self.request.user.id)\
-                    .order_by('like__liked_on')
+        user =  cast_user(self.request.user)
+        queryset = self.get_by_id().likes.all().follow_count()\
+            .check_follow(user.id)\
+                .order_by('-like__liked_on')
 
         return self.generic_list(queryset)
 
@@ -97,14 +101,15 @@ class TweetViewSet(viewsets.ModelViewSet, ViewSetMixins):
         methods=['get']
     )
     def replies(self, request, *args, **kwargs):
-        queryset = self.get_by_id().replies.all()\
-            .num_many_to_many('likes')\
-                    .num_one_to_many('retweet', 'reply')\
-                        .order_by('created_at')
+        queryset = self.get_by_id().replies.all().prop_count()\
+            .order_by('-created_at')
+
+    @action(
+        detail=True,
+        methods=['get']
+    )
+    def retweets(self, request, *args, **kwargs):
+        queryset = self.get_by_id().retweets.all().prop_count()\
+            .order_by('-created_at')
 
         return self.generic_list(queryset)
-
-"""
-Allow users to br displayed in tweets
-display related tweet for get one
-"""

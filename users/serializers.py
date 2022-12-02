@@ -1,10 +1,15 @@
+from typing import Any
 from rest_framework import serializers
 
 from django.contrib.auth import get_user_model
 from djoser.conf import settings
 from djoser.serializers import UserCreateSerializer, UserSerializer as UserSerial
 
-User = get_user_model()
+from twitter.util import cast_user
+
+User = cast_user(get_user_model())
+
+settings: Any = settings
 
 class UserCreate(UserCreateSerializer):
     class Meta:
