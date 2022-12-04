@@ -141,13 +141,6 @@ class RelateTweet(models.Model):
     class Meta:
         abstract = True
 
-class Notification(BaseModel, Owned, RelateTweet):
-    body = models.TextField(_('body'))
-    seen = models.BooleanField(default = False)
-
-    def __str__(self):
-        return f"Notification, {self.id}, {self.user}, {self.body}"
-
 class Bookmark(BaseModel, Owned, RelateTweet):
 
     def __str__(self):

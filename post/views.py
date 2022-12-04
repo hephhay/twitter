@@ -32,7 +32,7 @@ class TweetViewSet(viewsets.ModelViewSet, ViewSetMixins):
         'tags'
     ]
 
-    owener_field = 'owner_field'
+    owner_field = 'created_by'
 
     model = Tweet
 

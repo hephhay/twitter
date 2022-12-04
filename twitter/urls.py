@@ -22,5 +22,6 @@ urlpatterns = [
     path(r'auth/', include('djoser.urls')),
     path(r'auth/', include('djoser.urls.jwt')),
     path('', include('users.urls')),
-    path('', include('post.urls'))
+    path('', include('post.urls')),
+    path('', include('real_time.urls'))
 ]

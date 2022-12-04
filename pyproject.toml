@@ -17,6 +17,8 @@ djangorestframework = "^3.14.0"
 markdown = "^3.4.1"
 django-filter = "^22.1"
 djoser = "^2.1.0"
+django-channels = "^0.7.0"
+daphne = "^4.0.0"
 
 
 [tool.poetry.group.dev.dependencies]
