@@ -114,6 +114,23 @@ python-versions = "*"
 pycparser = "*"
 
 [[package]]
+name = "channels"
+version = "4.0.0"
+description = "Brings async, event-driven capabilities to Django 3.2 and up."
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+asgiref = ">=3.5.0,<4"
+daphne = {version = ">=4.0.0", optional = true, markers = "extra == \"daphne\""}
+Django = ">=3.2"
+
+[package.extras]
+daphne = ["daphne (>=4.0.0)"]
+tests = ["async-timeout", "coverage (>=4.5,<5.0)", "pytest", "pytest-asyncio", "pytest-django"]
+
+[[package]]
 name = "charset-normalizer"
 version = "2.1.1"
 description = "The Real First Universal Charset Detector. Open, modern and actively maintained alternative to Chardet."
@@ -233,23 +250,6 @@ tzdata = {version = "*", markers = "sys_platform == \"win32\""}
 [package.extras]
 argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
-
-[[package]]
-name = "django-channels"
-version = "0.7.0"
-description = "A Django library for sending notifications"
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-requests = ">=2.7.0"
-requests-oauthlib = ">=0.5.0"
-six = ">=1.9.0"
-
-[package.extras]
-docs = ["Sphinx (>=1.4,<1.5)", "sphinx-rtd-theme (>=0.1.9,<0.2)"]
-test = ["mock (>=2.0.0,<3.0.0)"]
 
 [[package]]
 name = "django-filter"
@@ -1130,7 +1130,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "d038ad163045eed8225b46de4b34b6dca747a00b349ca777f6dbc648f38c2010"
+content-hash = "57e8ab996e11f55f8c1139b334c09488a61bd4a7145d3b46a9c01055bf2982f5"
 
 [metadata.files]
 asgiref = [
@@ -1243,6 +1243,10 @@ cffi = [
     {file = "cffi-1.15.1-cp39-cp39-win_amd64.whl", hash = "sha256:70df4e3b545a17496c9b3f41f5115e69a4f2e77e94e1d2a8e1070bc0c38c8a3c"},
     {file = "cffi-1.15.1.tar.gz", hash = "sha256:d400bfb9a37b1351253cb402671cea7e89bdecc294e8016a707f6d1d8ac934f9"},
 ]
+channels = [
+    {file = "channels-4.0.0-py3-none-any.whl", hash = "sha256:2253334ac76f67cba68c2072273f7e0e67dbdac77eeb7e318f511d2f9a53c5e4"},
+    {file = "channels-4.0.0.tar.gz", hash = "sha256:0ce53507a7da7b148eaa454526e0e05f7da5e5d1c23440e4886cf146981d8420"},
+]
 charset-normalizer = [
     {file = "charset-normalizer-2.1.1.tar.gz", hash = "sha256:5a3d016c7c547f69d6f81fb0db9449ce888b418b5b9952cc5e6e66843e9dd845"},
     {file = "charset_normalizer-2.1.1-py3-none-any.whl", hash = "sha256:83e9a75d1911279afd89352c68b45348559d1fc0506b054b346651b5e7fee29f"},
@@ -1306,11 +1310,6 @@ distlib = [
 django = [
     {file = "Django-4.1.2-py3-none-any.whl", hash = "sha256:26dc24f99c8956374a054bcbf58aab8dc0cad2e6ac82b0fe036b752c00eee793"},
     {file = "Django-4.1.2.tar.gz", hash = "sha256:b8d843714810ab88d59344507d4447be8b2cf12a49031363b6eed9f1b9b2280f"},
-]
-django-channels = [
-    {file = "django-channels-0.7.0.tar.gz", hash = "sha256:c8bc623df4a7828c2e5ea453d0d0f066ff9b71b8c7c1a58b2f7fa86bc0bd619e"},
-    {file = "django_channels-0.7.0-py2-none-any.whl", hash = "sha256:06812bda257e7b5e9786b1c205bede9ab7bd2864689ed5dc64b549086b3d3a33"},
-    {file = "django_channels-0.7.0-py3-none-any.whl", hash = "sha256:ceb5675ed0133bd54cc0529eb76157cc3b9ab67aceba7293ee5ac2fe4126987b"},
 ]
 django-filter = [
     {file = "django-filter-22.1.tar.gz", hash = "sha256:ed473b76e84f7e83b2511bb2050c3efb36d135207d0128dfe3ae4b36e3594ba5"},

@@ -39,6 +39,9 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    # third-party priority apps
+    'daphne',
+
     #django defined apps
     'django.contrib.admin',
     'django.contrib.auth',
@@ -47,7 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    #third-party apps
+    # third-party apps
     'rest_framework',
     'djoser',
     'rest_framework_simplejwt',
@@ -66,7 +69,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',                                               
 ]
 
 ROOT_URLCONF = 'twitter.urls'
@@ -88,6 +91,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'twitter.wsgi.application'
+
+ASGI_APPLICATION = 'twitter.asgi.application'
 
 
 # Database
