@@ -11,7 +11,7 @@ from rest_framework import (
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from djoser.conf import settings
+from django.conf import settings
 from twitter.util import cast_user
 
 from users.filters import UserFilter
