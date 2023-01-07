@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Any, Optional, Union
 from urllib.parse import parse_qs
 
 from django.utils.translation import gettext_lazy as _
@@ -7,7 +7,11 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
 
 from channels.middleware import BaseMiddleware
-from channels.auth import AuthMiddlewareStack, UserLazyObject
+from channels.auth import (
+    AuthMiddlewareStack,
+    UserLazyObject,
+    CookieMiddleware
+)
 from channels.db import database_sync_to_async
 from rest_framework_simplejwt.authentication import AUTH_HEADER_TYPE_BYTES
 from rest_framework_simplejwt.settings import api_settings
@@ -22,7 +26,7 @@ api_settings: Any = api_settings
 AUTH_HEADER_TYPES = api_settings.AUTH_HEADER_TYPES
 
 class JWTMiddleware(BaseMiddleware):
-    def __init__(self, inner) -> None:
+    def __init__(self, inner: BaseMiddleware) -> None:
         self.user_model = get_user_model()
         return super().__init__(inner)
 
@@ -31,6 +35,9 @@ class JWTMiddleware(BaseMiddleware):
         scope = dict(scope)
         if 'user' not in scope:
             scope['user'] = UserLazyObject()
+
+        elif scope['user'].is_authenticated:
+            return await super().__call__(scope, receive, send)
 
         try:
             user = await self.authenticate(scope)
@@ -121,5 +128,5 @@ class JWTMiddleware(BaseMiddleware):
         return user
 
 
-def JWTMiddlewareStack(inner) -> JWTMiddleware:
-    return JWTMiddleware(AuthMiddlewareStack(inner))
+def JWTMiddlewareStack(inner) -> Union[BaseMiddleware, CookieMiddleware]:
+    return AuthMiddlewareStack(JWTMiddleware(inner))

@@ -1,4 +1,9 @@
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
 from django.contrib.auth import get_user
+from django.utils.decorators import classonlymethod
+from abc import abstractmethod, ABC
 
 from rest_framework import permissions
 from rest_framework.permissions import SAFE_METHODS
@@ -17,3 +22,21 @@ class OwnerOrAdminOrReadOnly(permissions.IsAuthenticatedOrReadOnly):
         if getattr(obj, 'owner_field', None) == request.user.id:
             return True
         return request.method in SAFE_METHODS or request.user.is_staff
+
+
+if TYPE_CHECKING:
+    from twitter.consumers import BaseConsumer
+
+
+class BasePermissionAsync(ABC):
+
+    @classonlymethod
+    @abstractmethod
+    def has_permission(cls, consumer: BaseConsumer) -> bool:
+        pass
+
+class IsAuthenticated(BasePermissionAsync):
+
+    @classonlymethod
+    def has_permission(cls, consumer: BaseConsumer) -> bool:
+        return consumer.scope['user'].is_authenticated

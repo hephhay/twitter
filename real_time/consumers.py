@@ -1,18 +1,19 @@
 import json
+from typing import Union
 
-from channels.generic.websocket import WebsocketConsumer
+from twitter.consumers import BaseConsumer
+from twitter.permissions import IsAuthenticated
 
 
-class ChatConsumer(WebsocketConsumer):
-    def connect(self):
-        print(self.scope.get('error', None))
-        self.accept()
+class ChatConsumer(BaseConsumer):
+    PermissionClasses = [IsAuthenticated]
 
-    def disconnect(self, close_code):
-        pass
+    async def connect(self):
+        await self.check_permission()
+        await self.accept()
 
-    def receive(self, text_data):
+    async def receive(self, text_data: Union[str, bytes, bytearray]):
         text_data_json = json.loads(text_data)
         print(text_data_json)
         message = text_data_json['message']
-        self.send(text_data=json.dumps({"message": message}))
+        await self.send(text_data=json.dumps({"message": message}))
