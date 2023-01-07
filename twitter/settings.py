@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 from dotenv import load_dotenv
 import os
-from typing import Dict, Union, Optional
+from typing import Dict, Tuple, Union, Optional, List
 from datetime import timedelta
 
 load_dotenv()
@@ -221,6 +221,27 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
+
+AUTH_USER_MODEL = 'users.User'
+
+USER_ID_FIELD = 'username'
+
+TEST_CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
+
+LIVE_CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}
+
+CHANNEL_LAYERS = TEST_CHANNEL_LAYERS if DEBUG else LIVE_CHANNEL_LAYERS
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/

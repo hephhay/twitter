@@ -41,7 +41,6 @@ class TweetViewSet(viewsets.ModelViewSet, ViewSetMixins):
 
         if self.action == 'retrieve':
             queryset = queryset
-            print(queryset.model)
 
         if self.request.method == 'GET':
             queryset = queryset.prop_count().order_by('num_likes')

@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 
 from post.models import BaseModel
-from users.models import Owned, RelateTweet
+from users.models import Owned
 
 class Group(BaseModel):
     group_name = models.CharField(
@@ -53,9 +53,14 @@ class Message(BaseModel):
 
     seen_by = models.ManyToManyField(get_user_model())
 
-class Notification(BaseModel, Owned, RelateTweet): #type: ignore
+class Notification(BaseModel, Owned):
     body = models.TextField(_('body'))
     seen = models.BooleanField(default = False)
+    model = models.CharField(_('model Type'), max_length=50)
+    model_id = models.URLField(_('model id'))
 
     def __str__(self):
         return f"Notification, {self.id}, {self.user}, {self.body}"
+
+class Clients(Owned):
+    channel_name = models.CharField(unique=True, max_length=255)

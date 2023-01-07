@@ -130,7 +130,7 @@ class Owned(models.Model):
     class Meta:
         abstract = True
 
-class RelateTweet(models.Model):
+class Bookmark(BaseModel, Owned):
     tweet = models.ForeignKey(
         Tweet,
         on_delete = models.CASCADE,
@@ -138,10 +138,6 @@ class RelateTweet(models.Model):
         null = True,
         editable=False
     )
-    class Meta:
-        abstract = True
-
-class Bookmark(BaseModel, Owned, RelateTweet):
 
     def __str__(self):
         return f"Bookmark, {self.id}"

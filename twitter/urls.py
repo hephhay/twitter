@@ -1,3 +1,20 @@
+import json
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
+channel_layer = get_channel_layer()
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def test_me(request, name):
+    async_to_sync(channel_layer.send)(name, {
+        "type": "websocket.receive",
+        "text": json.dumps({"message":"happy"})
+    })
+    return Response({'happy', 'yes'})
+
 """twitter URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -23,5 +40,6 @@ urlpatterns = [
     path(r'auth/', include('djoser.urls.jwt')),
     path('', include('users.urls')),
     path('', include('post.urls')),
-    path('', include('real_time.urls'))
+    path('', include('real_time.urls')),
+    path('notify/<str:name>', test_me)
 ]
