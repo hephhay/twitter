@@ -5,6 +5,7 @@ from channels.generic.websocket import WebsocketConsumer
 
 class ChatConsumer(WebsocketConsumer):
     def connect(self):
+        print(self.scope.get('error', None))
         self.accept()
 
     def disconnect(self, close_code):

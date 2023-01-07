@@ -32,9 +32,13 @@ class JWTMiddleware(BaseMiddleware):
         if 'user' not in scope:
             scope['user'] = UserLazyObject()
 
-        user = await self.authenticate(scope)
+        try:
+            user = await self.authenticate(scope)
+            scope['user']._wrapped = user or AnonymousUser()
 
-        scope['user']._wrapped = user or AnonymousUser()
+        except (TokenError, InvalidToken, AuthenticationFailed) as Err:
+            scope['error'] = str(Err)
+            scope['user']._wrapped = AnonymousUser()
 
         return await super().__call__(scope, receive, send)
 
