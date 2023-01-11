@@ -185,6 +185,7 @@ DJOSER = {
     },
     "PERMISSIONS": {
         "user_list": ["rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"],
+        # "user_create": ["rest_framework.permissions.AllowAny"],
         "user": ["twitter.permissions.CurrentUserOrAdminOrReadOnly"]
     },
     "HIDE_USERS": False

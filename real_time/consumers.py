@@ -35,3 +35,12 @@ class NotificatonConsumer(BaseConsumer):
     @database_sync_to_async
     def destroy(self) -> None:
         Clients.objects.get(channel_name=self.channel_name).delete()
+
+    # Receive message chahnnel layer
+    async def notify_user(self, event):
+        message = event['message']
+
+        # Send message to WebSocket
+        await self.send(text_data=json.dumps({
+            'message': message
+        }))

@@ -10,8 +10,8 @@ channel_layer = get_channel_layer()
 @permission_classes([AllowAny])
 def test_me(request, name):
     async_to_sync(channel_layer.send)(name, {
-        "type": "websocket.receive",
-        "text": json.dumps({"message":"happy"})
+        "type": "notify_user",
+        "message": "happy"
     })
     return Response({'happy', 'yes'})
 
