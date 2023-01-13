@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 from dotenv import load_dotenv
 import os
-from typing import Dict, Tuple, Union, Optional, List
+from typing import Dict, Union, Optional, Any, Callable
 from datetime import timedelta
 
 load_dotenv()
@@ -31,7 +31,17 @@ SECRET_KEY = os.getenv('DJANGO_SECRET')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*'] if DEBUG else []
+# Function to set object based on debug status
+
+def SELECT(
+    dev: Any, prod: Any, op: Optional[Callable[[Any], Any]] = None, debug = DEBUG
+):
+    if op:
+        dev, prod = map(op, [dev, prod])
+    return dev if debug else dev
+
+
+ALLOWED_HOSTS = SELECT(['*'], [])
 
 
 # Application definition
@@ -39,6 +49,7 @@ ALLOWED_HOSTS = ['*'] if DEBUG else []
 INSTALLED_APPS = [
     # third-party priority apps
     'daphne',
+    'django_celery_results',
 
     #django defined apps
     'django.contrib.admin',
@@ -118,7 +129,19 @@ PROD_DATABASE : Dict[str, Optional[str]] = {
 }
 
 DATABASES = {
-    'default': DEBUG_DATABASE if DEBUG else PROD_DATABASE
+    'default': SELECT(DEBUG_DATABASE, PROD_DATABASE)
+}
+
+# Django caches
+# https://docs.djangoproject.com/en/4.1/ref/settings/#std-setting-CACHES
+
+CACHES_URL = [SELECT("CACHE_URL_DEV", "CACHE_URL", os.getenv)]
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": CACHES_URL,
+    },
 }
 
 # User substitution
@@ -227,22 +250,15 @@ AUTH_USER_MODEL = 'users.User'
 
 USER_ID_FIELD = 'username'
 
-TEST_CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels.layers.InMemoryChannelLayer"
-    }
-}
-
-LIVE_CHANNEL_LAYERS = {
+# Django channels layer
+CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("127.0.0.1", 6379)],
+            "hosts": CACHES_URL,
         },
     },
 }
-
-CHANNEL_LAYERS = TEST_CHANNEL_LAYERS if DEBUG else LIVE_CHANNEL_LAYERS
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
@@ -257,3 +273,12 @@ FIXTURE_DIRS = [
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Celery broker settings
+CELERY_BROKER_USER=SELECT('BROKER_USER_DEV', 'BROKER_USER', os.getenv)
+CELERY_BROKER_PASSWORD=SELECT('BROKER_PASSWORD_DEV', 'BROKER_PASSWORD', os.getenv)
+CELERY_BROKER_URL = SELECT('BROKER_URL_DEV', 'BROKER_URL', os.getenv)
+
+CELERY_ACCEPT_CONTENT = ['json', 'pickle']
+
+CELERY_RESULT_BACKEND = f"{CACHES_URL[0]}/0"
