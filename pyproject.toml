@@ -18,7 +18,7 @@ markdown = "^3.4.1"
 django-filter = "^22.1"
 djoser = "^2.1.0"
 channels = {extras = ["daphne"], version = "^4.0.0"}
-celery = {extras = ["redis"], version = "^5.2.7"}
+celery = {extras = ["auth", "librabbitmq", "msgpack", "redis"], version = "^5.2.7"}
 django-celery-results = "^2.4.0"
 redis = "^4.4.2"
 hiredis = "^2.1.1"

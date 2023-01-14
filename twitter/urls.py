@@ -1,18 +1,18 @@
 import json
+
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
-channel_layer = get_channel_layer()
+from rest_framework.permissions import IsAuthenticated
+
+
+from real_time.tasks import send_notification
 
 @api_view(['GET'])
-@permission_classes([AllowAny])
-def test_me(request, name):
-    async_to_sync(channel_layer.send)(name, {
-        "type": "notify_user",
-        "message": "happy"
-    })
+@permission_classes([IsAuthenticated])
+def test_me(request) -> Response:
+    send_notification.delay(request.user.id)
     return Response({'happy', 'yes'})
 
 """twitter URL Configuration
@@ -41,5 +41,5 @@ urlpatterns = [
     path('', include('users.urls')),
     path('', include('post.urls')),
     path('', include('real_time.urls')),
-    path('notify/<str:name>', test_me)
+    path('notify/', test_me)
 ]
