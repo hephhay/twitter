@@ -9,11 +9,12 @@ from celery import group
 
 from twitter.celery import app
 from twitter.consumers import BaseConsumer
-from real_time.models import Notification
+from real_time.models import Clients
 
 @app.task
 def send_notification(user_id: UUID) -> None:
-    chanels = Notification.objects.filter(user = user_id).values_list(flat=True)
+    chanels = Clients.objects.filter(user = user_id)\
+        .values_list('channel_name', flat=True)
     print(chanels)
 
 @app.task

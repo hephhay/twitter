@@ -63,4 +63,4 @@ class Notification(BaseModel, Owned):
         return f"Notification, {self.id}, {self.user}, {self.body}"
 
 class Clients(Owned):
-    channel_name = models.CharField(unique=True, max_length=255)
+    channel_name = models.CharField(unique=True, max_length=255, primary_key=True)

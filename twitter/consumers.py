@@ -8,7 +8,7 @@ from twitter.permissions import  BasePermissionAsync
 
 T = List[Type[BasePermissionAsync]]
 
-class BaseConsumer(AsyncWebsocketConsumer, ABC):
+class  BaseConsumer(AsyncWebsocketConsumer, ABC):
     PermissionClasses: T
     Permitted = False
 
