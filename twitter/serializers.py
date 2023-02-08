@@ -1,7 +1,11 @@
-from rest_framework import serializers
+from typing import Any, Callable, cast
 
-class RecursiveSingleField(serializers.Serializer):
-    def to_representation(self, value):
-        serializer: serializers.Serializer = self.parent\
-            .__class__(value, context=self.context)  # type: ignore
+from rest_framework.serializers import Serializer
+
+SerialFunc = Callable[[Any, Any], Serializer]
+
+class RecursiveSingleField(Serializer):
+    def to_representation(self, value: Any):
+        intermediate = cast(SerialFunc, self.parent.__class__)
+        serializer = intermediate(value, context=self.context) #type: ignore
         return serializer.data
