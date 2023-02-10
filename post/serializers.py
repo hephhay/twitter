@@ -1,8 +1,24 @@
 from rest_framework import serializers, viewsets
+from django.core.files.uploadedfile import UploadedFile
 
-from post.models import Tweet
+from post.models import Tweet, TweetMedia
+from utils.helpers import validate_image
 from utils.const import READ_ONLY_FIELDS
 from utils.serializers import RecursiveSingleField
+
+
+class TweetMediaSerilizer(serializers.Serializer):
+    def validate_file(self, image: UploadedFile):
+        validate_image(image)
+
+    class Meta:
+        model = TweetMedia
+        feilds = '__all__'
+        extra_kwargs = {
+            'created_at': {
+                'read_only': True
+            }
+        }
 
 class TweetSerilizer(serializers.ModelSerializer):
 
@@ -12,9 +28,9 @@ class TweetSerilizer(serializers.ModelSerializer):
 
     num_likes = serializers.IntegerField(read_only = True)
 
-    reply = RecursiveSingleField(required=False, read_only = True)
+    reply = RecursiveSingleField(required = False, read_only = True)
 
-    retweet = RecursiveSingleField(required=False, read_only = True)
+    retweet = RecursiveSingleField(required = False, read_only = True)
 
     def create(self, validated_data):
         context = self.context
@@ -33,4 +49,4 @@ class TweetSerilizer(serializers.ModelSerializer):
     class Meta:
         model = Tweet
         exclude = ('likes',)
-        read_only_fields = ('likes','tags', *READ_ONLY_FIELDS)
+        read_only_fields = ('tags', *READ_ONLY_FIELDS)

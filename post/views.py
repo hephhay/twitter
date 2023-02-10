@@ -1,11 +1,17 @@
 from typing import Any
 
-from rest_framework import viewsets, serializers, status, permissions
+from rest_framework import (
+    viewsets,
+    serializers,
+    status,
+    permissions,
+    mixins
+)
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from post.models import Tweet
-from post.serializers import TweetSerilizer
+from post.models import Tweet, TweetMedia
+from post.serializers import TweetMediaSerilizer, TweetSerilizer
 from post.filters import TweetFilter
 from utils.helpers import cast_user
 from users.serializers import UserSerializer
@@ -112,3 +118,21 @@ class TweetViewSet(viewsets.ModelViewSet, ViewSetMixins):
             .order_by('-created_at')
 
         return self.generic_list(queryset)
+
+
+class TweetMediaViewSet(
+    mixins.ListModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.CreateModelMixin,
+    mixins.DestroyModelMixin,
+    ViewSetMixins
+):
+    queryset = TweetMedia.objects.all().prefetch_related('tweet')
+
+    serializer_class = TweetMediaSerilizer
+
+    permission_classes = [OwnerOrAdminOrReadOnly]
+
+    lookup_field = 'file'
+
+    owner_field = 'tweet__created_by'

@@ -1,6 +1,6 @@
-from django_filters import BooleanFilter, CharFilter
+from django_filters import BooleanFilter, CharFilter, FilterSet
 
-from post.models import Tweet
+from post.models import Tweet, TweetMedia
 from utils.filters import CustomFilter
 
 class TweetFilter(CustomFilter):
@@ -17,3 +17,9 @@ class TweetFilter(CustomFilter):
             'created_at',
             'updated_at'
         ]
+
+class TwitterFilter(FilterSet):
+
+    class Meta:
+        model = TweetMedia
+        fields = ['tweet']

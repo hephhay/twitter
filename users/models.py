@@ -12,7 +12,7 @@ from utils.queryset import CustomQuerySet
 
 def user_avatar_path(instance, filename):
     __,extension = splitext(filename)
-    return f'users/avatar/{instance.user.username}_{extension}'
+    return f'users/avatar/{instance.username}{extension}'
 
 
 class Follow(models.Model):
@@ -51,8 +51,9 @@ class UserQuerySet(CustomQuerySet):
     def follow_count(self):
         return self.num_many_to_many('followers', 'following')
 
-class UserManager(AuthModels.UserManager): #type: ignore
-    _queryset_class = UserQuerySet
+class UserManager(
+    AuthModels.UserManager.from_queryset(UserQuerySet) #type: ignore
+): ...
 
 class User(AuthModels.AbstractUser):
     id = models.UUIDField(
