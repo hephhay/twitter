@@ -1,6 +1,6 @@
 from django.db.models import Manager
 
-from twitter.queryset import CustomQuerySet
+from utils.queryset import CustomQuerySet
 
 class CustomManager(Manager): #type: ignore
     _queryset_class = CustomQuerySet

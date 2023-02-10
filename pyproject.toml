@@ -25,6 +25,7 @@ hiredis = "^2.1.1"
 channels-redis = "^4.0.0"
 whitenoise = "^6.3.0"
 django-cors-headers = "^3.13.0"
+pillow = "^9.4.0"
 
 
 [tool.poetry.group.dev.dependencies]

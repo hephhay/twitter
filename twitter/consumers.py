@@ -4,7 +4,7 @@ import json
 
 from channels.generic.websocket import AsyncWebsocketConsumer
 
-from twitter.permissions import  BasePermissionAsync
+from utils.permissions import  BasePermissionAsync
 
 T = List[Type[BasePermissionAsync]]
 

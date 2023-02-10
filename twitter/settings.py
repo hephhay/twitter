@@ -201,7 +201,7 @@ REST_FRAMEWORK = {
     'django_filters.rest_framework.DjangoFilterBackend',
     'rest_framework.filters.SearchFilter'
     ],
-    'DEFAULT_PAGINATION_CLASS': 'twitter.pagination.CustomPageNumberPagination'
+    'DEFAULT_PAGINATION_CLASS': 'utils.pagination.CustomPageNumberPagination'
 }
 
 DJOSER = {
@@ -213,7 +213,7 @@ DJOSER = {
     },
     "PERMISSIONS": {
         "user_list": ["rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"],
-        "user": ["twitter.permissions.CurrentUserOrAdminOrReadOnly"]
+        "user": ["utils.permissions.CurrentUserOrAdminOrReadOnly"]
     },
     "HIDE_USERS": False
 }
@@ -276,6 +276,10 @@ STORAGES = {
 STATIC_URL = 'static/'
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
+
+MEDIA_URL = 'media/'
+
+MEDIA_ROOT = BASE_DIR / 'media/'
 
 FIXTURE_DIRS = [
     BASE_DIR / 'fixtures'

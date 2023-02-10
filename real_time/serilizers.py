@@ -2,7 +2,7 @@ from rest_framework import serializers
 from post.serializers import TweetSerilizer
 
 from real_time.models import Group, Message,  Notification
-from twitter.const import READ_ONLY_FIELDS
+from utils.const import READ_ONLY_FIELDS
 from users.serializers import UserSerializer
 
 

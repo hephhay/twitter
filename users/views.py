@@ -12,12 +12,12 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from django.conf import settings
-from twitter.util import cast_user
+from utils.helpers import cast_user
 
 from users.filters import UserFilter
 from users.models import User
 from users.serializers import UserSerializer
-from twitter.mixins import ViewSetMixins
+from utils.mixins import ViewSetMixins
 
 settings: Any = settings
 

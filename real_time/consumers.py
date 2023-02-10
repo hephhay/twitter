@@ -4,7 +4,7 @@ from typing import Union
 from channels.db import database_sync_to_async
 
 from twitter.consumers import BaseConsumer
-from twitter.permissions import IsAuthenticated
+from utils.permissions import IsAuthenticated
 from real_time.models import Clients
 
 

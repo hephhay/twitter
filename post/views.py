@@ -7,10 +7,10 @@ from rest_framework.response import Response
 from post.models import Tweet
 from post.serializers import TweetSerilizer
 from post.filters import TweetFilter
-from twitter.util import cast_user
+from utils.helpers import cast_user
 from users.serializers import UserSerializer
-from twitter.permissions import OwnerOrAdminOrReadOnly
-from twitter.mixins import ViewSetMixins
+from utils.permissions import OwnerOrAdminOrReadOnly
+from utils.mixins import ViewSetMixins
 
 class TweetViewSet(viewsets.ModelViewSet, ViewSetMixins):
     queryset = Tweet.objects.prefetch_related('retweet', 'reply')

@@ -1,5 +1,8 @@
 import json
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from rest_framework.decorators import api_view, permission_classes
@@ -42,4 +45,4 @@ urlpatterns = [
     path('', include('post.urls')),
     path('', include('real_time.urls')),
     path('notify/', test_me)
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

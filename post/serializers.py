@@ -1,8 +1,8 @@
 from rest_framework import serializers, viewsets
 
 from post.models import Tweet
-from twitter.const import READ_ONLY_FIELDS
-from twitter.serializers import RecursiveSingleField
+from utils.const import READ_ONLY_FIELDS
+from utils.serializers import RecursiveSingleField
 
 class TweetSerilizer(serializers.ModelSerializer):
 

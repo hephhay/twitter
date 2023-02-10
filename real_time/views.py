@@ -8,8 +8,8 @@ from real_time.serilizers import (
     MessageSerializer,
     NotificationSerializer
 )
-from twitter.permissions import OwnerOrAdminOrReadOnly
-from twitter.mixins import ViewSetMixins
+from utils.permissions import OwnerOrAdminOrReadOnly
+from utils.mixins import ViewSetMixins
 
 
 class GroupViewSet(viewsets.ModelViewSet, ViewSetMixins):

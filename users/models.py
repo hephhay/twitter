@@ -7,7 +7,7 @@ from django.core.validators import validate_email
 from django.utils.translation import gettext_lazy as _
 
 from post.models import BaseModel, Tweet, User_Model
-from twitter.queryset import CustomQuerySet
+from utils.queryset import CustomQuerySet
 
 class Follow(models.Model):
     user = models.ForeignKey(

@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 from djoser.conf import settings
 from djoser.serializers import UserCreateSerializer, UserSerializer as UserSerial
 
-from twitter.util import cast_user
+from utils.helpers import cast_user
 
 User = cast_user(get_user_model())
 

@@ -5,7 +5,7 @@ from django.contrib.postgres.fields import ArrayField
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 
-from twitter.queryset import CustomQuerySet
+from utils.queryset import CustomQuerySet
 
 User_Model = settings.AUTH_USER_MODEL
 

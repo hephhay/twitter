@@ -8,7 +8,7 @@ from abc import abstractmethod, ABC
 from rest_framework import permissions
 from rest_framework.permissions import SAFE_METHODS
 
-from twitter.util import cast_user
+from utils.helpers import cast_user
 
 class CurrentUserOrAdminOrReadOnly(permissions.IsAuthenticatedOrReadOnly):
     def has_object_permission(self, request, view, obj):
