@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     # third-party priority apps
     'daphne',
     'django_celery_results',
+    'corsheaders',
+    'whitenoise.runserver_nostatic',
 
     #django defined apps
     'django.contrib.admin',
@@ -74,7 +76,9 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -193,10 +197,10 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication'
     ],
-        'DEFAULT_FILTER_BACKENDS': [
-        'django_filters.rest_framework.DjangoFilterBackend',
-        'rest_framework.filters.SearchFilter'
-        ],
+    'DEFAULT_FILTER_BACKENDS': [
+    'django_filters.rest_framework.DjangoFilterBackend',
+    'rest_framework.filters.SearchFilter'
+    ],
     'DEFAULT_PAGINATION_CLASS': 'twitter.pagination.CustomPageNumberPagination'
 }
 
@@ -209,7 +213,6 @@ DJOSER = {
     },
     "PERMISSIONS": {
         "user_list": ["rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"],
-        # "user_create": ["rest_framework.permissions.AllowAny"],
         "user": ["twitter.permissions.CurrentUserOrAdminOrReadOnly"]
     },
     "HIDE_USERS": False
@@ -261,13 +264,21 @@ CHANNEL_LAYERS = {
     },
 }
 
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
 
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
 FIXTURE_DIRS = [
-    os.path.join(BASE_DIR, 'fixtures')
+    BASE_DIR / 'fixtures'
 ]
 
 # Default primary key field type
@@ -283,3 +294,7 @@ CELERY_BROKER_URL = SELECT('BROKER_URL_DEV', 'BROKER_URL', os.getenv)
 CELERY_ACCEPT_CONTENT = ['json', 'pickle']
 
 CELERY_RESULT_BACKEND = f"{CACHES_URL[0]}/0"
+
+CORS_ALLOW_ALL_ORIGINS = DEBUG
+
+# CORS_ALLOWED_ORIGINS = []

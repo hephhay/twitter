@@ -412,6 +412,17 @@ python-versions = "*"
 celery = ">=5.2.3,<6.0"
 
 [[package]]
+name = "django-cors-headers"
+version = "3.13.0"
+description = "django-cors-headers is a Django application for handling the server headers required for Cross-Origin Resource Sharing (CORS)."
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+Django = ">=3.2"
+
+[[package]]
 name = "django-filter"
 version = "22.1"
 description = "Django-filter is a reusable Django application for allowing users to filter querysets dynamically."
@@ -1347,6 +1358,17 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "whitenoise"
+version = "6.3.0"
+description = "Radically simplified static file serving for WSGI applications"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.extras]
+brotli = ["Brotli"]
+
+[[package]]
 name = "yarg"
 version = "0.1.9"
 description = "A semi hard Cornish cheese, also queries PyPI (PyPI client)"
@@ -1388,7 +1410,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "0d4407c23d422ec4c175f7c599a79f708500d8ff2437317961cd529408be85f3"
+content-hash = "7603d5364388ea6a0b8058cdbd2c3bb162899d106d84d21851bd1e60cef30654"
 
 [metadata.files]
 amqp = [
@@ -1608,6 +1630,10 @@ django = [
 django-celery-results = [
     {file = "django_celery_results-2.4.0-py3-none-any.whl", hash = "sha256:be91307c02fbbf0dda21993c3001c60edb74595444ccd6ad696552fe3689e85b"},
     {file = "django_celery_results-2.4.0.tar.gz", hash = "sha256:75aa51970db5691cbf242c6a0ff50c8cdf419e265cd0e9b772335d06436c4b99"},
+]
+django-cors-headers = [
+    {file = "django-cors-headers-3.13.0.tar.gz", hash = "sha256:f9dc6b4e3f611c3199700b3e5f3398c28757dcd559c2f82932687f3d0443cfdf"},
+    {file = "django_cors_headers-3.13.0-py3-none-any.whl", hash = "sha256:37e42883b5f1f2295df6b4bba96eb2417a14a03270cb24b2a07f021cd4487cf4"},
 ]
 django-filter = [
     {file = "django-filter-22.1.tar.gz", hash = "sha256:ed473b76e84f7e83b2511bb2050c3efb36d135207d0128dfe3ae4b36e3594ba5"},
@@ -2131,6 +2157,10 @@ vistir = [
 wcwidth = [
     {file = "wcwidth-0.2.5-py2.py3-none-any.whl", hash = "sha256:beb4802a9cebb9144e99086eff703a642a13d6a0052920003a230f3294bbe784"},
     {file = "wcwidth-0.2.5.tar.gz", hash = "sha256:c4d647b99872929fdb7bdcaa4fbe7f01413ed3d98077df798530e5b04f116c83"},
+]
+whitenoise = [
+    {file = "whitenoise-6.3.0-py3-none-any.whl", hash = "sha256:cf8ecf56d86ba1c734fdb5ef6127312e39e92ad5947fef9033dc9e43ba2777d9"},
+    {file = "whitenoise-6.3.0.tar.gz", hash = "sha256:fe0af31504ab08faa1ec7fc02845432096e40cc1b27e6a7747263d7b30fb51fa"},
 ]
 yarg = [
     {file = "yarg-0.1.9-py2.py3-none-any.whl", hash = "sha256:4f9cebdc00fac946c9bf2783d634e538a71c7d280a4d806d45fd4dc0ef441492"},
