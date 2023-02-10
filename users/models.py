@@ -1,5 +1,6 @@
 from typing import Any
 from uuid import uuid4
+from os.path import splitext
 
 from django.db import models
 from django.contrib.auth import models as AuthModels
@@ -8,6 +9,11 @@ from django.utils.translation import gettext_lazy as _
 
 from post.models import BaseModel, Tweet, User_Model
 from utils.queryset import CustomQuerySet
+
+def user_avatar_path(instance, filename):
+    __,extension = splitext(filename)
+    return f'users/avatar/{instance.user.username}_{extension}'
+
 
 class Follow(models.Model):
     user = models.ForeignKey(
@@ -77,9 +83,9 @@ class User(AuthModels.AbstractUser):
         symmetrical = False
     )
 
-    avatar = models.CharField(
+    avatar = models.ImageField(
         _("profile pictire"),
-        max_length = 100,
+        upload_to = user_avatar_path,
         null=True
     )
 
