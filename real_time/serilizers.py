@@ -6,14 +6,14 @@ from utils.const import READ_ONLY_FIELDS
 from users.serializers import UserSerializer
 
 
-class GroupSerializer(serializers.Serializer):
+class GroupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Group
         exclude = ('participants',)
         read_only_fields = READ_ONLY_FIELDS
 
-class MessageSerializer(serializers.Serializer):
+class MessageSerializer(serializers.ModelSerializer):
     sender = UserSerializer(read_only=True)
 
     class Meta:
@@ -21,10 +21,11 @@ class MessageSerializer(serializers.Serializer):
         exclude = ('seen_by',)
         read_only_fields = READ_ONLY_FIELDS
 
-class NotificationSerializer(serializers.Serializer):
+class NotificationSerializer(serializers.ModelSerializer):
     tweet = TweetSerilizer(read_only=True)
     user = UserSerializer(read_only=True)
 
     class Meta:
         model = Notification
+        fields = '__all__'
         read_only_fields = READ_ONLY_FIELDS

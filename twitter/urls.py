@@ -8,15 +8,19 @@ from channels.layers import get_channel_layer
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-
+from drf_spectacular.views import (
+    SpectacularAPIView,
+    SpectacularRedocView,
+    SpectacularSwaggerView
+)
 
 from real_time.tasks import send_notification
 
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def test_me(request) -> Response:
-    send_notification.delay(request.user.id)
-    return Response({'happy', 'yes'})
+# @api_view(['GET'])
+# @permission_classes([IsAuthenticated])
+# def test_me(request) -> Response:
+#     send_notification.delay(request.user.id)
+#     return Response({'happy', 'yes'})
 
 """twitter URL Configuration
 
@@ -44,5 +48,8 @@ urlpatterns = [
     path('', include('users.urls')),
     path('', include('post.urls')),
     path('', include('real_time.urls')),
-    path('notify/', test_me)
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
+    # path('notify/', test_me)
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -7,18 +7,14 @@ from utils.const import READ_ONLY_FIELDS
 from utils.serializers import RecursiveSingleField
 
 
-class TweetMediaSerilizer(serializers.Serializer):
+class TweetMediaSerilizer(serializers.ModelSerializer):
     def validate_file(self, image: UploadedFile):
         validate_image(image)
 
     class Meta:
         model = TweetMedia
-        feilds = '__all__'
-        extra_kwargs = {
-            'created_at': {
-                'read_only': True
-            }
-        }
+        fields = '__all__'
+        read_only_feilds = ['created_at']
 
 class TweetSerilizer(serializers.ModelSerializer):
 

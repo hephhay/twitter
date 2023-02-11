@@ -18,6 +18,7 @@ from users.filters import UserFilter
 from users.models import User
 from users.serializers import UserSerializer
 from utils.mixins import ViewSetMixins
+from utils.serializers import GeneralSerializer
 
 settings: Any = settings
 
@@ -58,7 +59,7 @@ class UserViewSet(
     @action(
         detail=True,
         methods=['post', 'delete'],
-        serializer_class = serializers.Serializer
+        serializer_class = GeneralSerializer
     )
     def follow(self, request, *args, **kwargs):
         user: User = self.get_object()

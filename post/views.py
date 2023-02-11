@@ -17,6 +17,7 @@ from utils.helpers import cast_user
 from users.serializers import UserSerializer
 from utils.permissions import OwnerOrAdminOrReadOnly
 from utils.mixins import ViewSetMixins
+from utils.serializers import GeneralSerializer
 
 class TweetViewSet(viewsets.ModelViewSet, ViewSetMixins):
     queryset = Tweet.objects.prefetch_related('retweet', 'reply')
@@ -60,7 +61,7 @@ class TweetViewSet(viewsets.ModelViewSet, ViewSetMixins):
     @action(
         detail=True,
         methods=['post', 'delete'],
-        serializer_class = serializers.Serializer,
+        serializer_class = GeneralSerializer,
         permission_classes = [permissions.IsAuthenticated]
     )
     def like_tweet(self, request, *args, **kwargs):
