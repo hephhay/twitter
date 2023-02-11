@@ -1188,18 +1188,6 @@ paths:
         required: true
       tags:
       - tweet
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GeneralRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/GeneralRequest'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/GeneralRequest'
-        required: true
       security:
       - cookieAuth: []
       - jwtAuth: []
@@ -1530,18 +1518,6 @@ paths:
         required: true
       tags:
       - users
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GeneralRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/GeneralRequest'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/GeneralRequest'
-        required: true
       security:
       - cookieAuth: []
       - jwtAuth: []
@@ -1647,14 +1623,7 @@ components:
       properties:
         message:
           type: string
-      required:
-      - message
-    GeneralRequest:
-      type: object
-      properties:
-        message:
-          type: string
-          minLength: 1
+          readOnly: true
       required:
       - message
     Group:

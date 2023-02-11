@@ -11,7 +11,7 @@ class RecursiveSingleField(Serializer):
         return serializer.data
 
 class GeneralSerializer(Serializer):
-    message = CharField()
+    message = CharField(read_only = True)
 
     class Meta:
         fields = '__all__'
