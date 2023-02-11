@@ -20,7 +20,7 @@ from utils.mixins import ViewSetMixins
 from utils.serializers import GeneralSerializer
 
 class TweetViewSet(viewsets.ModelViewSet, ViewSetMixins):
-    queryset = Tweet.objects.prefetch_related('retweet', 'reply')
+    queryset = Tweet.objects.prefetch_related('retweet', 'reply', 'tweet_media')
 
     serializer_class = TweetSerilizer
 

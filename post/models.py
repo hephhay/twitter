@@ -69,11 +69,6 @@ class Tweet(BaseModel):
         default = list
     )
 
-    media = ArrayField(
-        models.CharField(_('media files'), max_length = 200),
-        default = list
-    )
-
     created_by = models.ForeignKey(
         User_Model,
         on_delete = models.CASCADE,
@@ -105,7 +100,8 @@ class TweetMedia(models.Model):
     tweet = models.ForeignKey(
         Tweet,
         on_delete = models.CASCADE,
-        editable = False
+        editable = False,
+        related_name = 'tweet_media'
     )
 
     file = models.ImageField(

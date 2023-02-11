@@ -1897,13 +1897,6 @@ components:
           nullable: true
           minLength: 1
           title: Content or quote
-        media:
-          type: array
-          items:
-            type: string
-            minLength: 1
-            title: Media files
-            maxLength: 200
     PatchedUserRequest:
       type: object
       properties:
@@ -2101,6 +2094,11 @@ components:
         num_likes:
           type: integer
           readOnly: true
+        media:
+          type: array
+          items:
+            $ref: '#/components/schemas/TweetMediaSerilizer'
+          readOnly: true
         created_at:
           type: string
           format: date-time
@@ -2120,12 +2118,6 @@ components:
             title: Hash tags or usernames
             maxLength: 200
           readOnly: true
-        media:
-          type: array
-          items:
-            type: string
-            title: Media files
-            maxLength: 200
         created_by:
           type: string
           format: uuid
@@ -2134,6 +2126,7 @@ components:
       - created_at
       - created_by
       - id
+      - media
       - num_likes
       - num_reply
       - num_retweet
@@ -2147,13 +2140,6 @@ components:
           nullable: true
           minLength: 1
           title: Content or quote
-        media:
-          type: array
-          items:
-            type: string
-            minLength: 1
-            title: Media files
-            maxLength: 200
     User:
       type: object
       properties:

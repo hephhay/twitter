@@ -14,7 +14,7 @@ class TweetMediaSerilizer(serializers.ModelSerializer):
     class Meta:
         model = TweetMedia
         fields = '__all__'
-        read_only_feilds = ['created_at']
+        read_only_feilds = ['id', 'created_at']
 
 class TweetSerilizer(serializers.ModelSerializer):
 
@@ -27,6 +27,12 @@ class TweetSerilizer(serializers.ModelSerializer):
     reply = RecursiveSingleField(required = False, read_only = True)
 
     retweet = RecursiveSingleField(required = False, read_only = True)
+
+    media = TweetMediaSerilizer(
+        source = 'tweet_media',
+        read_only = True,
+        many =True
+    )
 
     def create(self, validated_data):
         context = self.context
