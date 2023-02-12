@@ -54,7 +54,6 @@ class TweetViewSet(viewsets.ModelViewSet, ViewSetMixins):
 
         return queryset
 
-
     def list(self, request, *args, **kwargs):
         return self.generic_list(self.get_queryset())
 
