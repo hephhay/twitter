@@ -23,8 +23,8 @@ class NotificatonConsumer(BaseConsumer):
     @database_sync_to_async
     def initialize(self) -> None:
         Clients.objects.create(user=self.scope['user'], channel_name=self.channel_name)
-        print(self.scope['user'])
-        print(self.channel_name)
+        # print(self.scope['user'])
+        # print(self.channel_name)
 
     async def receive(self, text_data: Union[str, bytes, bytearray]):
         # print(text_data)

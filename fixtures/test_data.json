@@ -1,0 +1,505 @@
+[
+{
+    "model": "users.follow",
+    "pk": 1,
+    "fields": {
+        "user": "8970d30a-0598-4558-9aeb-067c3a41427e",
+        "follower": "358be3fe-5c78-4140-8168-61de82f8801d",
+        "start_follow": "2022-10-27T21:25:02.291Z"
+    }
+},
+{
+    "model": "users.user",
+    "pk": "358be3fe-5c78-4140-8168-61de82f8801d",
+    "fields": {
+        "password": "pbkdf2_sha256$390000$TzGM2oql962S6P1MSJuDYF$V0+f/kfhFobTHXeh3lFsBUF4wWXkR4DnEqRZXCsB48w=",
+        "last_login": "2023-01-14T17:38:22.581Z",
+        "is_superuser": false,
+        "username": "titi_adewale",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2022-10-26T08:02:04.883Z",
+        "email": "titi34@hotmail.com",
+        "bio": null,
+        "first_name": "Titi",
+        "last_name": "Sulaimon",
+        "avatar": "",
+        "location": null,
+        "birth_date": "1993-12-15",
+        "is_verified": false,
+        "created_at": "2020-08-10T10:34:42.284Z",
+        "updated_at": "2022-10-30T09:21:08.419Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.user",
+    "pk": "3ee128cf-d4d3-43f2-9a13-4624d4dac563",
+    "fields": {
+        "password": "Rh9k7b6dxPDjYT4v50Ik",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "jolayemi11",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2022-10-26T08:02:04.859Z",
+        "email": "jolayemi47@hotmail.com",
+        "bio": null,
+        "first_name": "Jolayemi",
+        "last_name": "Busari",
+        "avatar": "",
+        "location": null,
+        "birth_date": "1986-05-01",
+        "is_verified": false,
+        "created_at": "2020-06-27T12:45:48.024Z",
+        "updated_at": "2023-03-07T23:42:04.606Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.user",
+    "pk": "406eb828-a526-4ca9-940c-11de6cf4bcf0",
+    "fields": {
+        "password": "nsP188hDxu_T_BhY0lwW",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "makinwa.taiwo79",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2022-10-26T08:02:04.840Z",
+        "email": "makinwa.adegoke@yahoo.com",
+        "bio": null,
+        "first_name": "Makinwa",
+        "last_name": "Adegoke",
+        "avatar": "",
+        "location": null,
+        "birth_date": "2004-09-03",
+        "is_verified": false,
+        "created_at": "2019-11-23T02:04:02.612Z",
+        "updated_at": "2021-03-20T16:15:09.373Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.user",
+    "pk": "44971573-6445-44be-bd52-30d44102c043",
+    "fields": {
+        "password": "0ddux8pqEmO1OjlSjx2k",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "jadesola.chibuike",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2022-10-26T08:02:04.863Z",
+        "email": "jadesola56@gmail.com",
+        "bio": null,
+        "first_name": "Jadesola",
+        "last_name": "Grace",
+        "avatar": "",
+        "location": null,
+        "birth_date": "1983-04-05",
+        "is_verified": false,
+        "created_at": "2022-01-25T13:46:00.662Z",
+        "updated_at": "2025-01-09T03:30:04.295Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.user",
+    "pk": "493b770c-99ac-40d1-9f19-30411d9c07fe",
+    "fields": {
+        "password": "pbkdf2_sha256$390000$4tDJdRnA5h6ddKIeMExmZq$OHOvM9L4l1UQnIEeIAgJazpe3U0qqUg0rrl7iaO6joI=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "tobias",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-02-08T07:58:22.458Z",
+        "email": "giwaouwatobi@tobias.com",
+        "bio": null,
+        "first_name": "oluwatobi",
+        "last_name": "giwa",
+        "avatar": "",
+        "location": null,
+        "birth_date": "1998-12-08",
+        "is_verified": false,
+        "created_at": "2023-02-08T07:58:22.810Z",
+        "updated_at": "2023-02-08T07:58:22.810Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.user",
+    "pk": "75adb001-5058-44a0-82db-f47387d207cc",
+    "fields": {
+        "password": "5bgAAlSEZASM39mJ8FRw",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "bukola.ademola",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2022-10-26T08:02:04.879Z",
+        "email": "bukola27@yahoo.com",
+        "bio": null,
+        "first_name": "Bukola",
+        "last_name": "Nwachukwu",
+        "avatar": "",
+        "location": null,
+        "birth_date": "2003-10-05",
+        "is_verified": false,
+        "created_at": "2020-11-19T03:55:16.649Z",
+        "updated_at": "2022-01-28T07:08:04.105Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.user",
+    "pk": "7922d196-cac4-443e-83ed-e61582097c14",
+    "fields": {
+        "password": "kcxYnDHrFFzLx5frH8Ap",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "adegoke35",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2022-10-26T08:02:04.849Z",
+        "email": "adegoke.afunku@gmail.com",
+        "bio": null,
+        "first_name": "Adegoke",
+        "last_name": "Afunku",
+        "avatar": "",
+        "location": null,
+        "birth_date": "1987-12-05",
+        "is_verified": false,
+        "created_at": "2021-03-20T17:38:09.069Z",
+        "updated_at": "2022-10-27T13:40:34.671Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.user",
+    "pk": "7bb8cd9a-c3f6-4f19-acbf-5f268f7cd3e1",
+    "fields": {
+        "password": "tzU0dq4eoQN9LlZFzwnL",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "shade.samuel75",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2022-10-26T08:02:04.871Z",
+        "email": "shade22@hotmail.com",
+        "bio": null,
+        "first_name": "Shade",
+        "last_name": "Oyelude",
+        "avatar": "",
+        "location": null,
+        "birth_date": "2007-12-29",
+        "is_verified": false,
+        "created_at": "2019-06-04T08:50:46.396Z",
+        "updated_at": "2019-11-13T10:52:23.835Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.user",
+    "pk": "8970d30a-0598-4558-9aeb-067c3a41427e",
+    "fields": {
+        "password": "pbkdf2_sha256$390000$26FfRVh1qK8vjVgmHNRyAo$0u9XYwr1iWsF0qXN9mY7TqumSSY43E18XoVjah6uXYc=",
+        "last_login": "2022-12-06T14:07:10.552Z",
+        "is_superuser": true,
+        "username": "hephhay",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2022-10-25T19:10:16.700Z",
+        "email": "daniel@gmail.com",
+        "bio": null,
+        "first_name": "Daniel",
+        "last_name": "Farayola",
+        "avatar": "",
+        "location": null,
+        "birth_date": "2000-09-17",
+        "is_verified": false,
+        "created_at": "2022-10-25T19:10:16.903Z",
+        "updated_at": "2022-10-27T22:05:38.157Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.user",
+    "pk": "8b38a911-22ff-484f-ad35-9f1324d9a438",
+    "fields": {
+        "password": "Qdy5mIbMZXss0f88Zz95",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "augustina32",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2022-10-26T08:02:04.875Z",
+        "email": "augustina0@hotmail.com",
+        "bio": null,
+        "first_name": "Augustina",
+        "last_name": "Wuraola",
+        "avatar": "",
+        "location": null,
+        "birth_date": "1997-06-06",
+        "is_verified": false,
+        "created_at": "2020-03-03T00:52:46.575Z",
+        "updated_at": "2021-12-31T18:59:13.677Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.user",
+    "pk": "92fed589-ed85-498b-802a-08fcc0dbe33d",
+    "fields": {
+        "password": "QavyV7Sx0DwiLhJAasCL",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "jadesola.ademayowa82",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2022-10-26T08:02:04.855Z",
+        "email": "jadesola.ebubechukwu51@hotmail.com",
+        "bio": null,
+        "first_name": "Jadesola",
+        "last_name": "Ebubechukwu",
+        "avatar": "",
+        "location": null,
+        "birth_date": "1996-07-22",
+        "is_verified": false,
+        "created_at": "2020-03-27T22:31:58.209Z",
+        "updated_at": "2022-09-22T21:08:18.734Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.user",
+    "pk": "be13f034-b91d-4b43-9881-fe9695c2f057",
+    "fields": {
+        "password": "1_30Jj01Xn8bAGmVAmH8",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "abisoye_sanusi64",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2022-10-26T08:02:04.867Z",
+        "email": "abisoye_olasunkanmi64@hotmail.com",
+        "bio": null,
+        "first_name": "Abisoye",
+        "last_name": "Olasunkanmi",
+        "avatar": "",
+        "location": null,
+        "birth_date": "1986-10-04",
+        "is_verified": false,
+        "created_at": "2022-06-17T04:27:26.538Z",
+        "updated_at": "2022-10-27T13:47:26.144Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "real_time.clients",
+    "pk": "specific.b35e1ca03f7d42afad5964249bf26659!601be9501d2d4a1b96ce3fefdc696f3e",
+    "fields": {
+        "user": "358be3fe-5c78-4140-8168-61de82f8801d"
+    }
+},
+{
+    "model": "real_time.clients",
+    "pk": "specific..inmemory!AObTLRFqPhxv",
+    "fields": {
+        "user": "358be3fe-5c78-4140-8168-61de82f8801d"
+    }
+},
+{
+    "model": "real_time.clients",
+    "pk": "specific..inmemory!deCukxyUJjll",
+    "fields": {
+        "user": "358be3fe-5c78-4140-8168-61de82f8801d"
+    }
+},
+{
+    "model": "real_time.clients",
+    "pk": "specific..inmemory!EIuMGQwNHljB",
+    "fields": {
+        "user": "358be3fe-5c78-4140-8168-61de82f8801d"
+    }
+},
+{
+    "model": "real_time.clients",
+    "pk": "specific..inmemory!esmAtUJMdjBi",
+    "fields": {
+        "user": "358be3fe-5c78-4140-8168-61de82f8801d"
+    }
+},
+{
+    "model": "real_time.clients",
+    "pk": "specific..inmemory!fkHEWqeajDig",
+    "fields": {
+        "user": "358be3fe-5c78-4140-8168-61de82f8801d"
+    }
+},
+{
+    "model": "real_time.clients",
+    "pk": "specific..inmemory!hjnRtzyOUodz",
+    "fields": {
+        "user": "358be3fe-5c78-4140-8168-61de82f8801d"
+    }
+},
+{
+    "model": "real_time.clients",
+    "pk": "specific..inmemory!hKczogecUbkS",
+    "fields": {
+        "user": "358be3fe-5c78-4140-8168-61de82f8801d"
+    }
+},
+{
+    "model": "real_time.clients",
+    "pk": "specific..inmemory!hrAQMmTWNXrK",
+    "fields": {
+        "user": "358be3fe-5c78-4140-8168-61de82f8801d"
+    }
+},
+{
+    "model": "real_time.clients",
+    "pk": "specific..inmemory!IhRXgDMeJqnm",
+    "fields": {
+        "user": "358be3fe-5c78-4140-8168-61de82f8801d"
+    }
+},
+{
+    "model": "real_time.clients",
+    "pk": "specific..inmemory!jAUzSFalUqTs",
+    "fields": {
+        "user": "358be3fe-5c78-4140-8168-61de82f8801d"
+    }
+},
+{
+    "model": "real_time.clients",
+    "pk": "specific..inmemory!jGqcIOzWrfWA",
+    "fields": {
+        "user": "358be3fe-5c78-4140-8168-61de82f8801d"
+    }
+},
+{
+    "model": "real_time.clients",
+    "pk": "specific..inmemory!LAyprYzUQkHD",
+    "fields": {
+        "user": "358be3fe-5c78-4140-8168-61de82f8801d"
+    }
+},
+{
+    "model": "real_time.clients",
+    "pk": "specific..inmemory!mAurxPRxuFaF",
+    "fields": {
+        "user": "358be3fe-5c78-4140-8168-61de82f8801d"
+    }
+},
+{
+    "model": "real_time.clients",
+    "pk": "specific..inmemory!MXNHpNCXtPCG",
+    "fields": {
+        "user": "358be3fe-5c78-4140-8168-61de82f8801d"
+    }
+},
+{
+    "model": "real_time.clients",
+    "pk": "specific..inmemory!nHgXEsLlnGQa",
+    "fields": {
+        "user": "358be3fe-5c78-4140-8168-61de82f8801d"
+    }
+},
+{
+    "model": "real_time.clients",
+    "pk": "specific..inmemory!QweFMTyqDqgb",
+    "fields": {
+        "user": "358be3fe-5c78-4140-8168-61de82f8801d"
+    }
+},
+{
+    "model": "real_time.clients",
+    "pk": "specific..inmemory!tYFkabFsIqdw",
+    "fields": {
+        "user": "358be3fe-5c78-4140-8168-61de82f8801d"
+    }
+},
+{
+    "model": "real_time.clients",
+    "pk": "specific..inmemory!UtBywDXxLRHw",
+    "fields": {
+        "user": "358be3fe-5c78-4140-8168-61de82f8801d"
+    }
+},
+{
+    "model": "post.like",
+    "pk": 3,
+    "fields": {
+        "liked_by": "358be3fe-5c78-4140-8168-61de82f8801d",
+        "liked": "d4a5c052-96f6-4d13-a4d5-811749a317fa",
+        "liked_on": "2022-10-30T15:48:29.056Z"
+    }
+},
+{
+    "model": "post.tweet",
+    "pk": "2acc0c4d-72d1-4344-a60e-fe874913efaf",
+    "fields": {
+        "created_at": "2022-10-30T15:46:32.484Z",
+        "updated_at": "2022-10-30T15:46:32.484Z",
+        "content": "cfvgdc",
+        "tags": "[]",
+        "created_by": "358be3fe-5c78-4140-8168-61de82f8801d",
+        "retweet": "d4a5c052-96f6-4d13-a4d5-811749a317fa",
+        "reply": null
+    }
+},
+{
+    "model": "post.tweet",
+    "pk": "32317b45-5b34-4b0b-8ee6-2f352c82c9af",
+    "fields": {
+        "created_at": "2022-10-30T15:50:17.688Z",
+        "updated_at": "2022-10-30T15:50:17.688Z",
+        "content": "nice reply",
+        "tags": "[]",
+        "created_by": "358be3fe-5c78-4140-8168-61de82f8801d",
+        "retweet": null,
+        "reply": "d4a5c052-96f6-4d13-a4d5-811749a317fa"
+    }
+},
+{
+    "model": "post.tweet",
+    "pk": "d4a5c052-96f6-4d13-a4d5-811749a317fa",
+    "fields": {
+        "created_at": "2022-10-30T13:23:45.805Z",
+        "updated_at": "2022-10-30T13:23:45.805Z",
+        "content": "I am very happy",
+        "tags": "[]",
+        "created_by": "358be3fe-5c78-4140-8168-61de82f8801d",
+        "retweet": null,
+        "reply": null
+    }
+},
+{
+    "model": "post.tweet",
+    "pk": "ed6eb24a-c938-4cbf-b1cf-fce6b238feab",
+    "fields": {
+        "created_at": "2022-10-30T15:48:54.833Z",
+        "updated_at": "2022-10-30T15:48:54.833Z",
+        "content": "nice reply",
+        "tags": "[]",
+        "created_by": "358be3fe-5c78-4140-8168-61de82f8801d",
+        "retweet": "d4a5c052-96f6-4d13-a4d5-811749a317fa",
+        "reply": null
+    }
+}
+]

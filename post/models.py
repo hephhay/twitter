@@ -8,23 +8,13 @@ from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 
 from utils.queryset import CustomQuerySet
+from utils.models import BaseModel
 
 User_Model = settings.AUTH_USER_MODEL
 
 def tweet_media_filename(instance, filename):
     __,extension = splitext(filename)
     return f'tweet/media/{instance.tweet.id}_{int(time.time())}{extension}'
-
-class BaseModel(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
-
-    created_at = models.DateTimeField(auto_now_add=True, editable=False)
-
-    updated_at = models.DateTimeField(auto_now=True, editable=False)
-
-    class Meta:
-        ordering = ['-created_at', '-updated_at']
-        abstract = True
 
 class TweetQuerySet(CustomQuerySet):
         def prop_count(self):

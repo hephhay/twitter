@@ -7,8 +7,9 @@ from django.contrib.auth import models as AuthModels
 from django.core.validators import validate_email
 from django.utils.translation import gettext_lazy as _
 
-from post.models import BaseModel, Tweet, User_Model
+from post.models import Tweet, User_Model
 from utils.queryset import CustomQuerySet
+from utils.models import BaseModel
 
 def user_avatar_path(instance, filename):
     __,extension = splitext(filename)

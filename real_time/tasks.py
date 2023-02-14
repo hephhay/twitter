@@ -15,7 +15,7 @@ from real_time.models import Clients
 def send_notification(user_id: UUID) -> None:
     chanels = Clients.objects.filter(user = user_id)\
         .values_list('channel_name', flat=True)
-    print(chanels)
+    # print(chanels)
 
 @app.task
 def notify_channel(channel_id: str)-> None:

@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 
-from post.models import BaseModel
+from utils.models import BaseModel
 from users.models import Owned
 
 class Group(BaseModel):
