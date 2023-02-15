@@ -985,12 +985,12 @@ paths:
         name: created_at_after
         schema:
           type: string
-          format: date
+          format: date-time
       - in: query
         name: created_at_before
         schema:
           type: string
-          format: date
+          format: date-time
       - in: query
         name: created_by
         schema:
@@ -1025,12 +1025,12 @@ paths:
         name: updated_at_after
         schema:
           type: string
-          format: date
+          format: date-time
       - in: query
         name: updated_at_before
         schema:
           type: string
-          format: date
+          format: date-time
       tags:
       - tweet
       security:
@@ -1618,6 +1618,80 @@ components:
       required:
       - token
       - uid
+    FlatTweetSerilizer:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        num_reply:
+          type: integer
+          readOnly: true
+        num_retweet:
+          type: integer
+          readOnly: true
+        num_likes:
+          type: integer
+          readOnly: true
+        media:
+          type: array
+          items:
+            $ref: '#/components/schemas/TweetMediaSerilizer'
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        content:
+          type: string
+          nullable: true
+          title: Content or quote
+        tags:
+          type: array
+          items:
+            type: string
+            title: Hash tags or usernames
+            maxLength: 200
+          readOnly: true
+        created_by:
+          type: string
+          format: uuid
+          readOnly: true
+        retweet:
+          type: string
+          format: uuid
+          readOnly: true
+          nullable: true
+        reply:
+          type: string
+          format: uuid
+          readOnly: true
+          nullable: true
+      required:
+      - created_at
+      - created_by
+      - id
+      - media
+      - num_likes
+      - num_reply
+      - num_retweet
+      - reply
+      - retweet
+      - tags
+      - updated_at
+    FlatTweetSerilizerRequest:
+      type: object
+      properties:
+        content:
+          type: string
+          nullable: true
+          minLength: 1
+          title: Content or quote
     General:
       type: object
       properties:
@@ -2099,6 +2173,14 @@ components:
           items:
             $ref: '#/components/schemas/TweetMediaSerilizer'
           readOnly: true
+        reply:
+          allOf:
+          - $ref: '#/components/schemas/FlatTweetSerilizer'
+          readOnly: true
+        retweet:
+          allOf:
+          - $ref: '#/components/schemas/FlatTweetSerilizer'
+          readOnly: true
         created_at:
           type: string
           format: date-time
@@ -2130,6 +2212,8 @@ components:
       - num_likes
       - num_reply
       - num_retweet
+      - reply
+      - retweet
       - tags
       - updated_at
     TweetSerilizerRequest:

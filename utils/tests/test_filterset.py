@@ -1,4 +1,3 @@
-from typing import Type, cast
 from unittest import TestCase, mock
 
 from django.db.models import QuerySet
