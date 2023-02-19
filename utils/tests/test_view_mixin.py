@@ -52,7 +52,6 @@ class TestViewSetMixins(TestCase):
         req = self.request.get('/')
         kwargs = {'username': 'hephhay'}
         req.query_params = req.GET # type: ignore
-        req.user = AnonymousUser()
 
         req_view = self.view_class()
         req_view.setup(request=req, **kwargs)
