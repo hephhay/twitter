@@ -2,6 +2,7 @@ from collections import OrderedDict
 from typing import cast, Any
 
 from django.test import TestCase
+from django.conf import settings
 from django.contrib.auth.models import AnonymousUser
 
 from rest_framework.test import APIRequestFactory
@@ -18,11 +19,12 @@ class TestViewSetMixins(TestCase):
 
     def setUp(self):
         super().setUp()
+
         self.view_class = ViewSetMixins
         self.view_class.queryset = User.objects.all()
+        self.view_class.lookup_field = settings.USER_ID_FIELD
         self.view_class.serializer_class = UserSerializer # type: ignore
-        
-        # self.view = self.view_class.as_view()
+
         self.request = APIRequestFactory()
 
     def test_generic_list(self):
@@ -46,4 +48,15 @@ class TestViewSetMixins(TestCase):
         )
         self.assertIsInstance(res.data.get('results', None), list)
 
-        # print(set(res.data.keys()) == {'count', 'next', 'previous', 'results'})
+    def test_get_by_id(self):
+        req = self.request.get('/')
+        kwargs = {'username': 'hephhay'}
+        req.query_params = req.GET # type: ignore
+        req.user = AnonymousUser()
+
+        req_view = self.view_class()
+        req_view.setup(request=req, **kwargs)
+
+        res = req_view.get_by_id()
+        self.assertIsInstance(res, User)
+        self.assertEqual(res.username, kwargs['username'])
