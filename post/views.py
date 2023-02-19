@@ -2,7 +2,6 @@ from typing import Any
 
 from rest_framework import (
     viewsets,
-    serializers,
     status,
     permissions,
     mixins
@@ -15,12 +14,13 @@ from post.serializers import TweetMediaSerilizer, TweetSerilizer
 from post.filters import TweetFilter
 from utils.helpers import cast_user
 from users.serializers import UserSerializer
+from users.views import UserViewSet
 from utils.permissions import OwnerOrAdminOrReadOnly
 from utils.mixins import ViewSetMixins
 from utils.serializers import GeneralSerializer
 
 class TweetViewSet(viewsets.ModelViewSet, ViewSetMixins):
-    queryset = Tweet.objects.prefetch_related('retweet', 'reply', 'tweet_media')
+    queryset = Tweet.objects.all()
 
     serializer_class = TweetSerilizer
 
@@ -46,11 +46,22 @@ class TweetViewSet(viewsets.ModelViewSet, ViewSetMixins):
     def get_queryset(self) -> Any:
         queryset = super().get_queryset()
 
-        if self.action == 'retrieve':
-            queryset = queryset
+        if self.action in ['replies', 'likes', 'retweets']:
+            queryset = self.get_by_id(queryset)
+            
+        if self.action == 'likes':
+            user =  cast_user(self.request.user)
+            return queryset.likes.all().follow_count()\
+                .check_follow(user.id)\
+                    .order_by('-like__liked_on')
+
 
         if self.request.method == 'GET':
-            queryset = queryset.prop_count().order_by('num_likes')
+            return queryset.prefetch_related(
+                'retweet',
+                'reply',
+                'tweet_media'
+            ).prop_count().order_by('num_likes')
 
         return queryset
 
@@ -92,12 +103,19 @@ class TweetViewSet(viewsets.ModelViewSet, ViewSetMixins):
         detail=True,
         methods=['get'],
         serializer_class = UserSerializer,
+        filterset_class = UserViewSet.filterset_class,
+        search_fields = UserViewSet.search_fields,
     )
     def likes(self, request, *args, **kwargs):
-        user =  cast_user(self.request.user)
-        queryset = self.get_by_id().likes.all().follow_count()\
-            .check_follow(user.id)\
-                .order_by('-like__liked_on')
+        return self.generic_list(self.get_queryset())
+
+    @action(
+        detail=True,
+        methods=['get']
+    )
+    def replies(self, request, *args, **kwargs):
+        queryset = self.get_queryset().replies.all().prop_count()\
+            .order_by('-created_at')
 
         return self.generic_list(queryset)
 
@@ -105,16 +123,8 @@ class TweetViewSet(viewsets.ModelViewSet, ViewSetMixins):
         detail=True,
         methods=['get']
     )
-    def replies(self, request, *args, **kwargs):
-        queryset = self.get_by_id().replies.all().prop_count()\
-            .order_by('-created_at')
-
-    @action(
-        detail=True,
-        methods=['get']
-    )
     def retweets(self, request, *args, **kwargs):
-        queryset = self.get_by_id().retweets.all().prop_count()\
+        queryset = self.get_queryset().retweets.all().prop_count()\
             .order_by('-created_at')
 
         return self.generic_list(queryset)

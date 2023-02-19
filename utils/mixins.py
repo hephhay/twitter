@@ -1,7 +1,6 @@
 from typing import Any
 
-from django.shortcuts import get_object_or_404
-
+from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
@@ -18,12 +17,12 @@ class ViewSetMixins(GenericViewSet):
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
-    def get_by_id(self) -> Any:
+    def get_by_id(self, queryset = None) -> Any:
         lookup_url_kwarg = self.lookup_url_kwarg or self.lookup_field
 
         filter_kwargs = {self.lookup_field: self.kwargs[lookup_url_kwarg]}
 
         return get_object_or_404(
-            self.get_queryset(),
+            queryset or self.get_queryset(),
             **filter_kwargs
         )

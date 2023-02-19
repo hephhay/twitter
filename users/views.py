@@ -1,8 +1,6 @@
 from typing import Any
 
 from rest_framework import (
-    viewsets,
-    serializers,
     permissions,
     status,
     exceptions,
@@ -27,7 +25,7 @@ class UserViewSet(
     mixins.RetrieveModelMixin,
     ViewSetMixins
 ):
-    queryset = User.objects.all().prefetch_related('followers')
+    queryset = User.objects.all()
 
     serializer_class = UserSerializer
 
@@ -49,10 +47,14 @@ class UserViewSet(
     def get_queryset(self) -> Any:
         queryset = super().get_queryset()
 
+        if self.action in ['followers', 'following']:
+            return self.get_by_id(queryset)
+
         if self.request.method == 'GET':
             user = cast_user(self.request.user)
-            queryset = queryset.follow_count()\
-                .check_follow(user.id).order_by('-num_followers')
+            return queryset.prefetch_related('followers')\
+                .follow_count().check_follow(user.id)\
+                    .order_by('-num_followers')
 
         return queryset
 
@@ -92,7 +94,7 @@ class UserViewSet(
         methods=['get'],
     )
     def followers(self, request, *args, **kwargs):
-        queryset = self.get_by_id().followers.all()
+        queryset = self.get_queryset().followers.all()
 
         return self.list_view(queryset)
 
@@ -101,6 +103,6 @@ class UserViewSet(
         methods=['get'],
     )
     def following(self, request, *args, **kwargs):
-        queryset = queryset = self.get_by_id().following.all()
+        queryset = queryset = self.get_queryset().following.all()
 
         return self.list_view(queryset)
