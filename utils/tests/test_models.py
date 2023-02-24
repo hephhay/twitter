@@ -1,5 +1,3 @@
-from typing import List
-
 from django.test import TestCase
 
 from utils.models import BaseModel

@@ -2,6 +2,7 @@ from collections import OrderedDict
 from typing import cast, Any
 
 from django.test import TestCase
+from django.http import QueryDict
 from django.conf import settings
 from django.contrib.auth.models import AnonymousUser
 
@@ -29,7 +30,7 @@ class TestViewSetMixins(TestCase):
 
     def test_generic_list(self):
         req = self.request.get('/')
-        req.query_params = req.GET # type: ignore
+        req.query_params = QueryDict(req.GET.urlencode()) # type: ignore
         req.user = AnonymousUser()
 
         req_view = self.view_class()
