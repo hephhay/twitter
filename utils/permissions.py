@@ -19,7 +19,8 @@ class CurrentUserOrAdminOrReadOnly(permissions.IsAuthenticatedOrReadOnly):
 
 class OwnerOrAdminOrReadOnly(permissions.IsAuthenticatedOrReadOnly):
     def has_object_permission(self, request, view, obj):
-        if getattr(obj, 'owner_field', None) == request.user.id:
+
+        if getattr(obj, view.owner_field, None) == request.user:
             return True
         return request.method in SAFE_METHODS or request.user.is_staff
 

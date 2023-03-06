@@ -17,6 +17,7 @@ from users.models import User
 from users.serializers import UserSerializer
 from utils.mixins import ViewSetMixins
 from utils.serializers import GeneralSerializer
+from post.serializers import TweetSerilizer
 
 settings: Any = settings
 

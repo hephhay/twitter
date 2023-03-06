@@ -6,7 +6,7 @@ from utils.filters import CustomFilter
 class TweetFilter(CustomFilter):
     rem_reply = BooleanFilter(field_name='reply', lookup_expr='isnull')
     rem_retweet = BooleanFilter(field_name='retweet', lookup_expr='isnull')
-    created_by = CharFilter()
+    created_by = CharFilter(field_name='created_by__username', lookup_expr='iexact')
     content = CharFilter(lookup_expr='icontains')
 
     class Meta:
