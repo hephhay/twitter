@@ -10,3 +10,4 @@ env/
 #caches
 .mypy_cache/
 __pycache__/
+staticfiles/
