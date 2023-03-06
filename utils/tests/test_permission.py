@@ -25,7 +25,7 @@ class TestCurrentUserOrAdminOrReadOnly(TestCase):
         data = cast(Dict[str, str], json_response.data)
         self.assertEqual(data.get(key, None), value)
 
-    def anon_user_can_view_own_object(self):
+    def test_anon_user_can_view_own_object(self):
         self.response = self.client.get(f'/auth/users/{self.user.username}/')
         self.assertEqual(self.response.status_code, status.HTTP_200_OK)
 
@@ -58,7 +58,7 @@ class TestCurrentUserOrAdminOrReadOnly(TestCase):
         self.assertEqual(self.response.status_code, status.HTTP_200_OK)
 
 
-class OwnerOrAdminOrReadOnlyTest(TestCase):
+class TestOwnerOrAdminOrReadOnly(TestCase):
     fixtures = ['test_data.json']
 
     def setUp(self):
@@ -75,13 +75,12 @@ class OwnerOrAdminOrReadOnlyTest(TestCase):
         data = cast(Dict[str, str], json_response.data)
         self.assertEqual(data.get(key, None), value)
 
-    def anon_user_can_view_own_object(self):
+    def test_anon_user_can_view_own_object(self):
         self.client.force_login(self.other_user)
         self.response = self.client.get(f'/tweet/{self.owned.id}/')
         self.assertEqual(self.response.status_code, status.HTTP_200_OK)
 
     def test_user_cannot_modify_other_objects(self):
-        self.client.force_login(self.other_user)
         self.response = self.client.patch(
             f'/tweet/{self.owned.id}/',
             {'content': 'Hello Testing'}
