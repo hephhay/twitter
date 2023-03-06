@@ -1,4 +1,3 @@
-from uuid import uuid4
 from os.path import splitext
 import time
 
