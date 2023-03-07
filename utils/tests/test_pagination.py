@@ -1,7 +1,7 @@
 from django.test import TestCase
-from django.http import QueryDict
 
 from rest_framework.test import APIRequestFactory
+from rest_framework.request import Request
 
 from users.models import User
 from utils.pagination import CustomPageNumberPagination
@@ -22,8 +22,7 @@ class TestCustomPageNumberPagination(TestCase):
 
     def test_pagination_results(self):
         queryset = self.model.objects.all()
-        request = self.factory.get('/users/')
-        request.query_params = QueryDict(request.GET.urlencode()) # type: ignore
+        request = Request(self.factory.get('/users/'))
         paginated_queryset = self.pagination\
             .paginate_queryset(queryset=queryset, request=request)
 
@@ -32,8 +31,7 @@ class TestCustomPageNumberPagination(TestCase):
             self.assertEqual(len(paginated_queryset), 5)
 
     def test_custom_page_size(self):
-        request = self.factory.get('users/', {'page_size': 2})
-        request.query_params = QueryDict(request.GET.urlencode()) # type: ignore
+        request = Request(self.factory.get('users/', {'page_size': 2}))
         queryset = self.model.objects.all()
         paginated_queryset = self.pagination.\
             paginate_queryset(queryset, request)
@@ -43,8 +41,7 @@ class TestCustomPageNumberPagination(TestCase):
             self.assertEqual(len(paginated_queryset), 2)
 
     def test_max_page_size(self):
-        request = self.factory.get('users/', {'page_size': 7})
-        request.query_params = QueryDict(request.GET.urlencode()) # type: ignore
+        request = Request(self.factory.get('users/', {'page_size': 7}))
         queryset = self.model.objects.all()
         self.pagination.max_page_size = 6
         paginated_queryset = self.pagination.\
